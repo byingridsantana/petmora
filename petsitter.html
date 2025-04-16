@@ -1,51 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Petmora</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Petmora</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>    
-    <!-- NAVBAR -->
-      <nav class="navbar navbar-expand-sm bg-body-tertiary navbar-shadow-bottom">
-        <div class="container">
-          <a class="navbar-brand" href="../index.html"><img src="/assets/img/site-logo-petmora.png" alt="Logo"></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+   <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-sm bg-body-tertiary navbar-shadow-bottom">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="assets/img/site-logo-petmora.png" alt="Logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Links do meio -->
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/pages/petsitter.html">Encontre um Pet Sitter</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/pages/hospedagem.html">Encontre uma Hospedagem</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/pages/como_funciona.html">Como Funciona?</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/pages/contato.html">Contato</a>
-              </li>
-            </ul>
-  
-
-            <!-- Link de login/cadastro à direita -->
-            <ul class="navbar-nav mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#authModal">Entrar / Cadastrar-se</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <!-- FIM NAVBAR -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="petsitter.html">Encontre um Pet Sitter</a></li>
+          <li class="nav-item"><a class="nav-link" href="hospedagem.html">Encontre uma Hospedagem</a></li>
+          <li class="nav-item"><a class="nav-link" href="como_funciona.html">Como Funciona?</a></li>
+          <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+        </ul>
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#authModal">Entrar / Cadastrar-se</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- FIM NAVBAR -->
 
          
 <!-- Modal de Login/Cadastro -->
@@ -63,7 +53,7 @@
           <div class="card mb-3" style="min-height: 400px; overflow: hidden;">
             <div class="row g-0">
               <div class="col-md-5">
-                <img src="/assets/img/imagem-do-login.png" class="w-100 h-100 object-fit-cover rounded-start" alt="Imagem do login">
+                <img src="assets/img/imagem-do-login.png" class="w-100 h-100 object-fit-cover rounded-start" alt="Imagem do login">
               </div>
               <div class="col-md-7">
                 <div class="card-body d-flex flex-column justify-content-center h-100">
@@ -96,7 +86,7 @@
           <div class="card mb-3" style="overflow: hidden; min-height: 400px;">
             <div class="row g-0">
               <div class="col-md-5">
-                <img src="/assets/img/imagem-do-login.png" class="w-100 h-100 object-fit-cover rounded-start" alt="Imagem do cadastro">
+                <img src="assets/img/imagem-do-login.png" class="w-100 h-100 object-fit-cover rounded-start" alt="Imagem do cadastro">
               </div>
               <div class="col-md-7">
                 <div class="card-body d-flex flex-column justify-content-center h-100">
@@ -147,12 +137,14 @@
   </div>
 </div>
 
+
+
 <section class="py-5 bg-white">
   <div class="container">
     <div class="row align-items-center">
       <!-- Imagem -->
       <div class="col-md-6 text-center order-1 order-md-2">
-        <img src="/assets/img/pet-feliz.png" alt="Pet feliz" class="img-fluid" style="max-width: 100%;">
+        <img src="assets/img/pet-feliz.png" alt="Pet feliz" class="img-fluid" style="max-width: 100%;">
       </div>
 
       <!-- Texto -->
@@ -168,7 +160,7 @@
         </p>
 
         <div class="text-center fs-5 mt-4">
-          <a href="/pages/escolha-hospedagem-petsitter.html" class="btn px-4 fs-5 py-2 text-white" style="background-color: #f97316;">
+          <a href="escolha-hospedagem-petsitter.html" class="btn px-4 fs-5 py-2 text-white" style="background-color: #f97316;">
             Encontre um Pet Sitter
           </a>
         </div>
@@ -185,7 +177,7 @@
     
     <!-- Imagem à esquerda -->
     <div class="col-12 col-md-6 d-flex justify-content-center mb-4 mb-md-0 pe-md-5">
-      <img src="/assets/img/pet-feliz-2.png" alt="Pet feliz" class="img-fluid" style="width: 450px; max-width: 100%;">
+      <img src="assets/img/pet-feliz-2.png" alt="Pet feliz" class="img-fluid" style="width: 450px; max-width: 100%;">
     </div>
 
     <!-- Texto à direita -->
@@ -218,21 +210,21 @@
             
             <!-- Passo 1 -->
             <div class="col-md-4 mb-4">
-              <img src="/assets/img/como-funciona-1.png" alt="Passo 1" class="img-fluid mb-3" style="max-width: 300px;">
+              <img src="assets/img/como-funciona-1.png" alt="Passo 1" class="img-fluid mb-3" style="max-width: 300px;">
               <h5 class="fw-bold titulo-como-funciona">Encontre o Pet Sitter ideal</h5>
               <p>Escolha entre cuidadores verificados e bem avaliados.</p>
             </div>
       
             <!-- Passo 2 -->
             <div class="col-md-4 mb-4 ">
-              <img src="/assets/img/como-funciona-2.png" alt="Passo 2" class="img-fluid mb-3" style="max-width: 300px;">
+              <img src="assets/img/como-funciona-2.png" alt="Passo 2" class="img-fluid mb-3" style="max-width: 300px;">
               <h5 class="fw-bold titulo-como-funciona">Combine os detalhes</h5>
               <p>Converse sobre a rotina, preferências e necessidades do seu pet.</p>
             </div>
       
             <!-- Passo 3 -->
             <div class="col-md-4 mb-4">
-              <img src="/assets/img/como-funciona-3.png" alt="Passo 3" class="img-fluid mb-3" style="max-width: 300px;">
+              <img src="assets/img/como-funciona-3.png" alt="Passo 3" class="img-fluid mb-3" style="max-width: 300px;">
               <h5 class="fw-bold titulo-como-funciona">Curta sua viagem sem preocupações</h5>
               <p>Seu pet recebe atenção e companhia enquanto você está fora.</p>
             </div>
@@ -249,28 +241,28 @@
       
       <!-- Depoimento 1 -->
       <div class="col-md-3 mb-4">
-        <img src="/assets/img/mariana.png" alt="Mariana R." class="foto-depoimento mb-3">
+        <img src="assets/img/mariana.png" alt="Mariana R." class="foto-depoimento mb-3">
         <p class="fst-italic">“Meu cachorro foi tratado com tanto carinho que parecia estar de férias também!”</p>
         <p class="fw-semibold">Mariana R.</p>
       </div>
 
       <!-- Depoimento 2 -->
       <div class="col-md-3 mb-4">
-        <img src="/assets/img/lucas.png" alt="Lucas S." class="foto-depoimento mb-3">
+        <img src="assets/img/lucas.png" alt="Lucas S." class="foto-depoimento mb-3">
         <p class="fst-italic">“Deixei minha gatinha e recebi fotos diárias, foi uma experiência incrível!”</p>
         <p class="fw-semibold">Lucas S.</p>
       </div>
 
       <!-- Depoimento 3 -->
       <div class="col-md-3 mb-4">
-        <img src="/assets/img/fernanda.png" alt="Fernanda M." class="foto-depoimento mb-3">
+        <img src="assets/img/fernanda.png" alt="Fernanda M." class="foto-depoimento mb-3">
         <p class="fst-italic">“Viajei tranquilo sabendo que meu gato estava sendo bem cuidado em casa.”</p>
         <p class="fw-semibold">Fernanda M.</p>
       </div>
 
       <!-- Depoimento 4 -->
       <div class="col-md-3 mb-4">
-        <img src="/assets/img/andre.png" alt="André C." class="foto-depoimento mb-3">
+        <img src="assets/img/andre.png" alt="André C." class="foto-depoimento mb-3">
         <p class="fst-italic">“O cuidador foi super atencioso e carinhoso, meu pet se sentiu em casa!”</p>
         <p class="fw-semibold">André C.</p>
       </div>
@@ -284,6 +276,7 @@
 
     <section id="topo">
       <div class="text-center my-4">
+
         <!-- Botão de Topo -->
         <button onclick="scrollToTop()" class="btn btn-topo">Volte ao Topo</button>
       </div>
@@ -299,19 +292,59 @@
 </nav>
 
 
- <!-- Footer -->
-    <div id="footer"></div>
+<!-- Inicio do Footer -->
+<footer class="bg-cinza text-dark pt-5 pb-3">
+  <div class="container">
+    <div class="row">
+      <!-- Logo -->
+      <div class="col-md-4 mb-4">
+        <img src="assets/img/logo-petmora.png" alt="Logo" style="max-width: 150px;">
+      </div>
+
+      <!-- Contato -->
+      <div class="col-md-4 mb-4">
+        <h6 class="fw-bold">Contato</h6>
+        <p class="mb-1">+55 (11) 9999-9999</p>
+        <p class="mb-1">petmora@petmora.com</p>
+        <hr>
+        <p class="mb-1">Rua das Margaridas, 12 - Tatuapé</p>
+        <p>São Paulo - SP</p>
+        <hr>
+        <div class="d-flex gap-3">
+          <a href="https://facebook.com" target="_blank"><i class="bi bi-facebook fs-4 text-dark"></i></a>
+          <a href="https:/instagram.com" target="_blank"><i class="bi bi-instagram fs-4 text-dark"></i></a>
+          <a href="https://youtube.com" target="_blank"><i class="bi bi-youtube fs-4 text-dark"></i></a>
+        </div>
+      </div>
+
+      <!-- Informações -->
+      <div class="col-md-4 mb-4">
+        <h6 class="fw-bold">Informações</h6>
+        <ul class="list-unstyled">
+          <li><a href="petsitter.html" class="text-dark text-decoration-none">Encontre um cuidador</a></li>
+          <li><a href="hospedagem.html" class="text-dark text-decoration-none">Encontre uma hospedagem</a></li>
+          <li><a href="como_funciona.html" class="text-dark text-decoration-none">Como funciona</a></li>
+          <li><a href="contato.html" class="text-dark text-decoration-none">Contato</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="text-center pt-3 border-top mt-4">
+      <p class="mb-1">Petmora © 2025 | Desenvolvido por Ingrid, Pedro e Bryan | Projeto de Desenvolvimento Web – SENAC</p>        
+      <a href="https://github.com/byingridsantana/petmora" target="_blank" class="text-dark text-decoration-none">
+        <i class="bi bi-github"></i> Ver no GitHub
+      </a>
+    </div>
+  </div>
+</footer>
+<!-- Fim do Footer -->
 
 
 
   <!-- Scripts do Bootstrap e jQuery -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
-  <script src="/assets/js/script.js"></script>
+  <script src="assets/js/script.js"></script>
 
-</body>
-</html>
-
-    
 </body>
 </html>

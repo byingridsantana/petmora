@@ -20,9 +20,9 @@ A proposta é conectar tutores a cuidadores, fornecendo **soluções seguras, pr
 
 ---
 
-## 👥 Público-Alvo
+## Público-Alvo
 
-### 🐶 Tutores de Pets
+### Tutores de Pets
 
 Tutores de cães e gatos que:
 
@@ -30,7 +30,7 @@ Tutores de cães e gatos que:
 - Procuram serviços **confiáveis de hospedagem ou cuidados**.
 - Desejam **informações e dicas** sobre cuidados com animais.
 
-### 🐕 Cuidadores de Pets
+### Cuidadores de Pets
 
 Pessoas que:
 

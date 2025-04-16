@@ -142,7 +142,7 @@ body {
 /* Como funciona */
 
 .banner-section {
-  background-image: url('/assets/img/como-funciona-banner.png');
+  background-image: url('../img/como-funciona-banner.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -154,10 +154,6 @@ body {
     height: 250px; /* altura menor em telas pequenas */
   }
 }
-
-
-
-
 
 
 /* Fundo da seção Beneficos do seu pet*/
