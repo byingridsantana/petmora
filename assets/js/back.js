@@ -57,6 +57,11 @@ btnLogin.onclick = () => {
   .then((res) => res.json())
   .then((dados) => {
     console.log(dados);
+    if( dados.msg == "Altere seu tipo de perfil."){
+      
+      alert(dados.msg);
+      return window.location.href = "meu-perfil.html#perfil";
+    }
   })
   .catch ((err) => {
     console.error(err);
