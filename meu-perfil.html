@@ -167,7 +167,7 @@
       <div class="col-md-3 text-center border-end">
         <img src="https://via.placeholder.com/150" alt="Foto de Perfil" class="profile-img mb-3" id="fotoPerfil">
         <input class="form-control" type="file" id="uploadFoto">
-        <h4 class="mt-2">Ana</h4>
+        <h4 class="mt-2" id="nome"></h4>
         <p class="text-muted edit-label" onclick="document.getElementById('uploadFoto').click()">editar foto do perfil</p>
       </div>
 
@@ -177,11 +177,11 @@
           <div class="row mb-3">
             <div class="col">
               <label>Nome</label>
-              <input type="text" class="form-control" value="Ana" disabled>
+              <input type="text" class="form-control" id="nome" disabled>
             </div>
             <div class="col">
               <label>Sobrenome</label>
-              <input type="text" class="form-control" value="Souza" disabled>
+              <input type="text" class="form-control" id="sobrenome" disabled>
             </div>
           </div>
 
@@ -199,7 +199,7 @@
           <div class="row mb-3">
             <div class="col">
               <label>Email</label>
-              <input type="email" class="form-control" value="anasouza@email.com" disabled>
+              <input type="email" class="form-control" id="email" disabled>
             </div>
             <div class="col">
               <label>Celular</label>
@@ -506,7 +506,50 @@
       config.style.display = 'block';
       tabs[2].classList.add('active');
     }
-    // 
+
+// Cookie adicionado 
+    const uploadfoto = document.getElementById("uploadFoto");
+    const iduser = document.getElementById("iduser");
+    const nome = document.getElementById("nome");
+    const sobrenome = document.getElementById("sobrenome");
+    const email = document.getElementById("email");
+
+
+
+    let cookie = document.cookie;
+    console.log(cookie)
+
+    let separa_igual = cookie.split('=')
+    console.log(separa_igual)
+    
+    let separa_virgula = separa_igual[1].split(',')
+    console.log(separa_virgula)
+    //pegar a quantidade de caracteres do idusuario
+    console.log(separa_virgula[0].length)
+
+    let fotousuario = separa_virgula[4].substring(16,separa_virgula[4].length-1)
+    console.log(fotousuario)
+    
+    console.log(separa_virgula[0].substring(14,separa_virgula[0].length))
+    let idusuario = separa_virgula[0].substring(13,separa_virgula[0].length)
+    
+    console.log(separa_virgula[1].substring(8,separa_virgula[1].length-1))
+    let nomeusuario = separa_virgula[1].substring(8,separa_virgula[1].length-1)
+    
+
+    let sobrenomeusuario= separa_virgula[3].substring(16,separa_virgula[3].length-1)
+    console.log(sobrenomeusuario)
+
+    let emailusuario = separa_virgula[2].substring(12,separa_virgula[2].length-1)
+    console.log(emailusuario)
+
+
+    iduser.innerHTML=`Id: ${idusuario}`;
+    nome.innerHTML = `${nomeusuario}`;
+    sobrenome.innerHTML = `${sobrenomeusuario}`;
+    email.innerHTML = `${emailusuario}`;
+    uploadfoto.src=`${fotousuario}`;
+
   </script>
 
 </body>
