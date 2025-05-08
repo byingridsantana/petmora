@@ -58,11 +58,23 @@ btnLogin.onclick = () => {
   .then((dados) => {
     console.log(dados);
     if( dados.msg == "Altere seu tipo de perfil."){
-      
+        let usuario = {
+          ID_Usuario: dados.usuario.id,
+          Nome: dados.usuario.nome,
+          Sobrenome: dados.usuario.sobrenome,
+          Email_usuario: dados.usuario.email,
+          Foto_usuario: dados.usuario.foto
+        }
+        document.cookie = `usuario=${JSON.stringify(usuario)};`
+        window.location.href = "meu-perfil.html#perfil";
+
       alert(dados.msg);
       return window.location.href = "meu-perfil.html#perfil";
-    }
-  })
-  .catch ((err) => {
-    console.error(err);
-  })};
+      }
+    })
+    .catch ((err) => {
+      console.error(err)
+    })};
+
+
+// Perfil - 
