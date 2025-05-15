@@ -77,4 +77,85 @@ btnLogin.onclick = () => {
     })};
 
 
-// Perfil - 
+// ====================================
+// Area de perfil
+
+async function alterarPerfil2() {
+  let cookie = document.cookie.split('; ').find(row => row.startsWith('usuario='));
+  if (!cookie) {
+    alert("Usuário não autenticado.");
+    return;
+  }
+
+  let usuario = JSON.parse(cookie.split('=')[1]);
+
+  const dadosPessoais = {
+    CPF: document.getElementById("CPF").value,
+    RG: document.getElementById("RG").value,
+    Data_Nascimento: document.getElementById("nascimento").value,
+    Genero: document.getElementById("genero").value,
+    Celular: document.getElementById("Celular").value,
+    CEP: document.getElementById("cep").value,
+    Endereco: document.getElementById("endereco").value,
+    Numero: document.getElementById("numero").value,
+    Bairro: document.getElementById("bairro").value,
+    Cidade: document.getElementById("cidade").value,
+    Estado: document.getElementById("estado").value
+  };
+
+  const dadosUsuario = {
+    Tipo_usuario: document.getElementById("tipoUsuario").value,
+    Experiencia: document.getElementById("observacoes").value || ""
+  };
+
+  try {
+    const respostaUsuario = await fetch(`http://127.0.0.1:3000/meu-perfil/${usuario.ID_Usuario}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(dadosUsuario)
+    });
+
+    const respostaPessoais = await fetch(`http://127.0.0.1:3000/meu-perfil/alterar-dados-pessoais/${usuario.ID_Usuario}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        CPF: document.getElementById("CPF").value,
+    RG: document.getElementById("RG").value,
+    Data_Nascimento: document.getElementById("nascimento").value,
+    Genero: document.getElementById("genero").value,
+    Celular: document.getElementById("Celular").value,
+    CEP: document.getElementById("cep").value,
+    Endereco: document.getElementById("endereco").value,
+    Numero: document.getElementById("numero").value,
+    Bairro: document.getElementById("bairro").value,
+    Cidade: document.getElementById("cidade").value,
+    Estado: document.getElementById("estado").value
+      })
+    }).then((res)=> res.json())
+    .then((rs)=>{
+      alert(rs.msg);
+    })
+    .catch((error)=>console.error(`Erro ao tentar atualizar => ${error}`))
+
+    const resultadoUsuario = await respostaUsuario.json();
+    const resultadoPessoais = await respostaPessoais.json();
+
+    if (respostaUsuario.ok && respostaPessoais.ok) {
+      alert("Perfil atualizado com sucesso!");
+    } else {
+      alert("Erro ao atualizar perfil:\n" + resultadoUsuario.msg + "\n" + resultadoPessoais.msg);
+    }
+  } catch (err) {
+    console.error("Erro ao salvar perfil:", err);
+    
+  }
+}
+
+
+// ==================================== 
+
+// Area pet
