@@ -167,7 +167,8 @@
       <div class="col-md-3 text-center border-end">
         <img src="https://via.placeholder.com/150" alt="Foto de Perfil" class="profile-img mb-3" id="fotoPerfil">
         <input class="form-control" type="file" id="uploadFoto">
-        <h4 class="mt-2" id="nome"></h4>
+        <h4 class="mt-2" id="nomeExibicao"></h4>
+        <p id="iduser" class="text-muted">ID:</p>
         <p class="text-muted edit-label" onclick="document.getElementById('uploadFoto').click()">editar foto do perfil</p>
       </div>
 
@@ -177,44 +178,44 @@
           <div class="row mb-3">
             <div class="col">
               <label>Nome</label>
-              <input type="text" class="form-control" id="nome" disabled>
+              <input type="text" class="form-control" id="inputNome" disabled>
             </div>
             <div class="col">
               <label>Sobrenome</label>
-              <input type="text" class="form-control" id="sobrenome" disabled>
+              <input type="text" class="form-control" id="inputSobrenome" disabled>
             </div>
           </div>
 
           <div class="row mb-3">
             <div class="col">
               <label>CPF</label>
-              <input type="text" class="form-control" placeholder="XXX.XXX.XXX-XX" maxlength="14" oninput="formatarCPF(this)">
+              <input type="text" class="form-control" id="CPF" placeholder="XXX.XXX.XXX-XX" maxlength="14" oninput="formatarCPF(this)">
             </div>
             <div class="col">
               <label>RG</label>
-              <input type="text" class="form-control" placeholder="XX.XXX.XXX-X" maxlength="12" oninput="formatarRG(this)" >
+              <input type="text" class="form-control" id="RG" placeholder="XX.XXX.XXX-X" maxlength="12" oninput="formatarRG(this)" >
             </div>
           </div>
 
           <div class="row mb-3">
             <div class="col">
               <label>Email</label>
-              <input type="email" class="form-control" id="email" disabled>
+              <input type="email" class="form-control" id="inputEmail" disabled>
             </div>
             <div class="col">
               <label>Celular</label>
-              <input type="text" class="form-control" placeholder="(XX) XXXXX-XXXX" maxlength="15" oninput="formatarCelular(this)">
+              <input type="text" class="form-control" id="Celular" placeholder="(XX) XXXXX-XXXX" maxlength="15" oninput="formatarCelular(this)">
             </div>
           </div>
 
           <div class="row mb-3">
             <div class="col">
               <label>Data de Nascimento</label>
-              <input type="date" class="form-control">
+              <input type="date" class="form-control" id="nascimento">
             </div>
             <div class="col">
               <label>Gênero</label>
-              <select class="form-control">
+              <select class="form-control" id="genero">
                 <option selected>Selecione o gênero</option>
                 <option>Feminino</option>
                 <option>Masculino</option>                
@@ -240,7 +241,7 @@
           <div class="row mb-3">
             <div class="col">
               <label>nº</label>
-              <input type="text" class="form-control" placeholder="nº">
+              <input type="text" class="form-control" placeholder="nº" id="numero">
             </div>
             <div class="col">
               <label>Bairro</label>
@@ -285,7 +286,7 @@
           </div>
 
           <div class="text-end">
-            <button type="submit" class="btn btn-laranja px-5">Salvar</button>
+            <button type="submit" class="btn btn-laranja px-5" id="btnSalvar2" onclick="alterarPerfil2()">Salvar</button>
           </div>
         </form>
       </div>
@@ -359,22 +360,18 @@
       <div class="row mb-3">
         <div class="col">
           <label>Nome</label>
-          <input type="text" class="form-control" value="Ana">
+          <input type="text" class="form-control" value="">
         </div>
         <div class="col">
           <label>Sobrenome</label>
-          <input type="text" class="form-control" value="Souza">
+          <input type="text" class="form-control" value="">
         </div>
       </div>
 
       <div class="row mb-3">
         <div class="col">
           <label>Telefone</label>
-          <input type="text" class="form-control" placeholder="(XX) XXXXX-XXXX" maxlength="15" oninput="formatarCelular(this)">
-        </div>
-        <div class="col">
-          <label>CPF</label>
-          <input type="text" class="form-control" placeholder="XXX.XXX.XXX-XX" maxlength="14" oninput="formatarCPF(this)">
+          <input type="text" class="form-control" id="celularConfig" placeholder="(XX) XXXXX-XXXX" maxlength="15" oninput="formatarCelular(this)">
         </div>
       </div>
 
@@ -507,50 +504,143 @@
       tabs[2].classList.add('active');
     }
 
-// Cookie adicionado 
-    const uploadfoto = document.getElementById("uploadFoto");
+// Cookie adicionado para parte de login 
+    const fotoPerfil = document.getElementById("fotoPerfil");
     const iduser = document.getElementById("iduser");
-    const nome = document.getElementById("nome");
-    const sobrenome = document.getElementById("sobrenome");
-    const email = document.getElementById("email");
+    const nomeExibicao = document.getElementById("nomeExibicao");
+    const inputNome = document.getElementById("inputNome");
+    const inputSobrenome = document.getElementById("inputSobrenome");
+    const inputEmail = document.getElementById("inputEmail");
 
 
 
-    let cookie = document.cookie;
-    console.log(cookie)
+    let cookie = document.cookie.split('; ').find(row => row.startsWith('usuario='));
+if (cookie) {
+  let usuario = JSON.parse(cookie.split('=')[1]);
 
     let separa_igual = cookie.split('=')
-    console.log(separa_igual)
+    // console.log(separa_igual)
     
     let separa_virgula = separa_igual[1].split(',')
-    console.log(separa_virgula)
+    // console.log(separa_virgula)
     //pegar a quantidade de caracteres do idusuario
-    console.log(separa_virgula[0].length)
+    // console.log(separa_virgula[0].length)
 
-    let fotousuario = separa_virgula[4].substring(16,separa_virgula[4].length-1)
-    console.log(fotousuario)
+    let fotousuario = separa_virgula[4].substring(16,separa_virgula[4].length-2)
+    // console.log(fotousuario)
     
-    console.log(separa_virgula[0].substring(14,separa_virgula[0].length))
+    // console.log(separa_virgula[0].substring(14,separa_virgula[0].length))
     let idusuario = separa_virgula[0].substring(13,separa_virgula[0].length)
     
-    console.log(separa_virgula[1].substring(8,separa_virgula[1].length-1))
+    // console.log(separa_virgula[1].substring(8,separa_virgula[1].length-1))
     let nomeusuario = separa_virgula[1].substring(8,separa_virgula[1].length-1)
     
 
-    let sobrenomeusuario= separa_virgula[3].substring(16,separa_virgula[3].length-1)
-    console.log(sobrenomeusuario)
+    let sobrenomeusuario= separa_virgula[2].substring(13,separa_virgula[2].length-1)
+    // console.log(sobrenomeusuario)
 
-    let emailusuario = separa_virgula[2].substring(12,separa_virgula[2].length-1)
-    console.log(emailusuario)
+    let emailusuario = separa_virgula[3].substring(17,separa_virgula[3].length-1)
+    // console.log(emailusuario)
+
+    let nomeExibicao = document.getElementById("nomeExibicao");
+    if (nomeExibicao) nomeExibicao.innerText = nomeusuario; 
+    
 
 
     iduser.innerHTML=`Id: ${idusuario}`;
-    nome.innerHTML = `${nomeusuario}`;
-    sobrenome.innerHTML = `${sobrenomeusuario}`;
-    email.innerHTML = `${emailusuario}`;
-    uploadfoto.src=`${fotousuario}`;
+    inputNome.value = `${nomeusuario}`;
+    inputSobrenome.value = `${sobrenomeusuario}`;
+    inputEmail.value = `${emailusuario}`;
+    fotoPerfil.src=`${fotousuario.toLowerCase()}`;
+
+}
 
   </script>
+
+<!-- Cookie adicionado para parte do meu perfil, atualização direta -->
+
+<script>
+
+  const CPF = document.getElementById("CPF");
+  const RG = document.getElementById("RG");
+  const Celular = document.getElementById("Celular"); 
+  const nascimento = document.getElementById("nascimento");
+  const genero = document.getElementById("genero");
+  const cep = document.getElementById("cep");
+  const endereco = document.getElementById("endereco");
+  const numero = document.getElementById("numero");
+  const bairro = document.getElementById("bairro");
+  const cidade = document.getElementById("cidade");
+  const estado = document.getElementById("estado");
+  const tipoUsuario = document.getElementById("tipoUsuario");
+  const btnSalvar2 = document.getElementById("btnSalvar2");
+
+
+  let cookie2 = document.cookie.split('; ').find(row => row.startsWith('usuario='));
+if (cookie2) {
+  let usuario = JSON.parse(cookie.split('=')[1]);
+
+    let separa_igual = cookie.split('=')
+    // console.log(separa_igual)
+    
+    let separa_virgula = separa_igual[1].split(',')
+    // console.log(separa_virgula)
+    //pegar a quantidade de caracteres do idusuario
+    // console.log(separa_virgula[0].length)
+
+    let CPFusuario = separa_virgula[5].substring(6,separa_virgula[5].length-1)
+    // console.log(CPFusuario)
+
+    let RGusuario = separa_virgula[6].substring(4,separa_virgula[6].length-1)
+    // console.log(RGusuario)
+
+    let Celularusuario = separa_virgula[7].substring(9,separa_virgula[7].length-1)
+    // console.log(Celularusuario)
+
+    let nascimentousuario = separa_virgula[8].substring(15,separa_virgula[8].length-1)
+    // console.log(nascimentousuario)
+
+    let generousuario = separa_virgula[9].substring(9,separa_virgula[9].length-1)
+    // console.log(generousuario)
+
+    let cepusuario = separa_virgula[10].substring(5,separa_virgula[10].length-1)
+    // console.log(cepusuario)
+
+    let enderecousuario = separa_virgula[11].substring(10,separa_virgula[11].length-1)
+     console.log(enderecousuario)
+
+    let numerousuario = separa_virgula[11].substring(4,separa_virgula[11].length-1)
+    // console.log(numerousuario)
+
+    let bairrousuario = separa_virgula[12].substring(8,separa_virgula[12].length-1)
+    // console.log(bairrousuario)
+
+    let cidadeusuario = separa_virgula[13].substring(8,separa_virgula[13].length-1)
+    // console.log(cidadeusuario)
+
+    let estadousuario = separa_virgula[14].substring(8,separa_virgula[14].length-1)
+    // console.log(estadousuario)
+
+    let tipousuario = separa_virgula[15].substring(13,separa_virgula[15].length-1)
+    // console.log(tipousuario)
+
+
+    
+    CPF.value = `${CPFusuario}`;
+    RG.value = `${RGusuario}`;
+    Celular.value = `${Celularusuario}`;
+    nascimento.value = `${nascimentousuario}`;
+    genero.value = `${generousuario}`;
+    cep.value = `${cepusuario}`;
+    endereco.value = `${enderecousuario}`;
+    numero.value = `${numerousuario}`;
+    bairro.value = `${bairrousuario}`;
+    cidade.value = `${cidadeusuario}`;
+    estado.value = `${estadousuario}`;
+    tipoUsuario.value = `${tipousuario}`;
+}
+
+</script>
 
 </body>
 </html>
