@@ -326,13 +326,49 @@
           <div class="mb-3">
             <label for="especiePet" class="form-label">Espécie</label>
             <select class="form-select" id="especiePet" required>
-              <option value="">Selecione</option>
+              <option value="" disabled selected>Selecione a espécie</option>
               <option>Cachorro</option>
               <option>Gato</option>              
             </select>
           </div>
           <div class="mb-3">
+            <label for="especiePet" class="form-label">Sexo</label>
+            <select class="form-select" id="especiePet" required>
+              <option value="" disabled selected>Selecione o sexo</option>
+              <option>Macho</option>
+              <option>Fêmea</option>              
+            </select>
+          </div>
+          <div class="mb-3">
             <label for="racaPet" class="form-label">Raça</label>
+            <input type="text" class="form-control" id="racaPet" required>
+          </div>
+          <div class="mb-3">
+            <label for="especiePet" class="form-label">Porte</label>
+            <select class="form-select" id="especiePet" required>
+              <option value="" disabled selected>Selecione o porte</option>
+              <option>Pequeno</option>
+              <option>Médio</option>        
+              <option>Grande</option>      
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="especiePet" class="form-label">Castrado</label>
+            <select class="form-select" id="especiePet" required>              
+              <option>Sim</option>
+              <option>Não</option>                  
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="racaPet" class="form-label">Restrições</label>
+            <input type="text" class="form-control" id="racaPet" required>
+          </div>
+          <div class="mb-3">
+            <label for="racaPet" class="form-label">Comportamento</label>
+            <input type="text" class="form-control" id="racaPet" required>
+          </div>
+          <div class="mb-3">
+            <label for="racaPet" class="form-label">Preferências</label>
             <input type="text" class="form-control" id="racaPet" required>
           </div>
           <div class="mb-3">
@@ -574,6 +610,7 @@ if (cookie) {
   const estado = document.getElementById("estado");
   const tipoUsuario = document.getElementById("tipoUsuario");
   const btnSalvar2 = document.getElementById("btnSalvar2");
+  const uploadFoto = document.getElementById("uploadFoto");
 
 
   let cookie2 = document.cookie.split('; ').find(row => row.startsWith('usuario='));
@@ -624,7 +661,8 @@ if (cookie2) {
     let tipousuario = separa_virgula[15].substring(13,separa_virgula[15].length-1)
     // console.log(tipousuario)
 
-
+    let uploadFoto = separa_virgula[4].substring(16,separa_virgula[4].length-2)
+    console.log(uploadFoto)
     
     CPF.value = `${CPFusuario}`;
     RG.value = `${RGusuario}`;
@@ -638,6 +676,7 @@ if (cookie2) {
     cidade.value = `${cidadeusuario}`;
     estado.value = `${estadousuario}`;
     tipoUsuario.value = `${tipousuario}`;
+    uploadFoto.value = `${uploadFoto}`;
 }
 
 </script>
