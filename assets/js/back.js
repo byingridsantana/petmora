@@ -80,6 +80,7 @@ btnLogin.onclick = () => {
 // ====================================
 // Area de perfil
 
+// Obter ID do usuário a partir do cookie
 async function alterarPerfil2() {
   let cookie = document.cookie.split('; ').find(row => row.startsWith('usuario='));
   if (!cookie) {
@@ -100,11 +101,13 @@ async function alterarPerfil2() {
     Numero: document.getElementById("numero").value,
     Bairro: document.getElementById("bairro").value,
     Cidade: document.getElementById("cidade").value,
-    Estado: document.getElementById("estado").value
+    Estado: document.getElementById("estado").value,
+    
   };
 
   const dadosUsuario = {
     Tipo_usuario: document.getElementById("tipoUsuario").value,
+    Foto_usuario: document.getElementById("uploadFoto").value,
     Experiencia: document.getElementById("observacoes").value || ""
   };
 
@@ -133,7 +136,8 @@ async function alterarPerfil2() {
     Numero: document.getElementById("numero").value,
     Bairro: document.getElementById("bairro").value,
     Cidade: document.getElementById("cidade").value,
-    Estado: document.getElementById("estado").value
+    Estado: document.getElementById("estado").value,
+    Foto_usuario: document.getElementById("uploadFoto").value
       })
     }).then((res)=> res.json())
     .then((rs)=>{
@@ -159,3 +163,110 @@ async function alterarPerfil2() {
 // ==================================== 
 
 // Area pet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// =====================================
+
+// Area de configuração
+// Atualizar dados pessoais
+
+// Obter ID do usuário a partir do cookie
+document.getElementById('btnAtualizar').onclick = () => {
+  const Nome = document.getElementById("nomeConfig").value;
+  const Sobrenome = document.getElementById("sobrenomeConfig").value;
+  const Celular = document.getElementById("celularConfig").value;
+  const Email_usuario = document.getElementById("emailConfig").value;
+
+  const cookieUsuario = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('usuario='));
+
+  if (!cookieUsuario) {
+    alert("Usuário não encontrado no cookie.");
+    return;
+  }
+
+  let ID_Usuario;
+  try {
+    const usuarioObj = JSON.parse(decodeURIComponent(cookieUsuario.split('=')[1]));
+    ID_Usuario = usuarioObj.ID_Usuario;
+  } catch (e) {
+    alert("Erro ao ler dados do cookie.");
+    return;
+  }
+
+  const data = {
+    Nome,
+    Sobrenome,
+    Celular,
+    Email_usuario
+  };
+
+  fetch(`http://127.0.0.1:3000/meu-perfil/config/${ID_Usuario}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+    .then(res => res.json())
+    .then(json => {
+      alert(json.msg);
+    })
+    .catch(err => {
+      console.error("Erro ao atualizar perfil:", err);
+      alert("Erro ao atualizar perfil.");
+    });
+};
+
+
+// Atualizar senha
+document.getElementById("formRedefinirSenha").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const novaSenha = document.getElementById("novaSenha").value;
+  const repitaSenha = document.getElementById("repitaSenha").value;
+
+  if (novaSenha !== repitaSenha) {
+    return alert("As senhas não coincidem!");
+  }
+
+  try {
+    const res = await fetch(`http://127.0.0.1:3000/meu-perfil/config/senha/${ID_Usuario}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ Senha_usuario: novaSenha })
+    });
+
+    const json = await res.json();
+    alert(json.msg);
+  } catch (err) {
+    console.error("Erro ao atualizar senha:", err);
+    alert("Erro ao redefinir a senha.");
+  }
+});
+
+// Mostrar/ocultar senha
+// ["toggleNovaSenha", "toggleRepitaSenha"].forEach(id => {
+//   document.getElementById(id).addEventListener("click", () => {
+//     const input = document.getElementById(id === "toggleNovaSenha" ? "novaSenha" : "repitaSenha");
+//     const icon = document.querySelector(`#${id} i`);
+//     input.type = input.type === "password" ? "text" : "password";
+//     icon.classList.toggle("bi-eye");
+//     icon.classList.toggle("bi-eye-slash");
+//   });
+// });
+
+
+

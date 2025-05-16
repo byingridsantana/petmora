@@ -216,7 +216,7 @@
             <div class="col">
               <label>Gênero</label>
               <select class="form-control" id="genero">
-                <option selected>Selecione o gênero</option>
+                <option selected disabled selected>Selecione o gênero</option>
                 <option>Feminino</option>
                 <option>Masculino</option>                
               </select>
@@ -261,7 +261,7 @@
             <div class="col-md-6">
               <label for="tipoUsuario">Tipo de perfil:</label>
               <select class="form-select" id="tipoUsuario" onchange="mostrarCamposAdicionais()">
-                <option value="">Selecione...</option>
+                <option value="" disabled selected>Selecione o tipo de perfil</option>
                 <option value="tutora">Tutor(a)</option>
                 <option value="cuidadora">Cuidador(a)</option>
                 <option value="ambas">Cuidador(a) e Tutor(a)</option>
@@ -394,7 +394,7 @@
   <!-- Configurações -->
 <div class="container my-5" id="configuracoes" style="display: none;">
   <div class="row section-border p-4">
-    <h5 class="mb-4">Atualizar Perfil</h5>
+    <h5 class="mb-4" id="btnAtualizar">Atualizar Perfil</h5>
 
     <form id="formConfiguracoes">
       <div class="row mb-3">
@@ -684,6 +684,24 @@ if (cookie2) {
 }
 
 </script>
+
+ <script>
+
+let cookieUsuario = document.cookie.split('; ').find(row => row.startsWith('usuario='));
+if (cookieUsuario) {
+  let usuario = JSON.parse(cookie.split('=')[1]);
+
+  let separa_igual = cookie.split('=')
+    // console.log(separa_igual)
+    
+    let separa_virgula = separa_igual[1].split(',')
+
+    
+
+
+  }
+ </script>
+
 
 </body>
 </html>
