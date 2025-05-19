@@ -394,17 +394,17 @@
   <!-- Configurações -->
 <div class="container my-5" id="configuracoes" style="display: none;">
   <div class="row section-border p-4">
-    <h5 class="mb-4" id="btnAtualizar">Atualizar Perfil</h5>
+    <h5 class="mb-4">Atualizar Perfil</h5>
 
     <form id="formConfiguracoes">
       <div class="row mb-3">
         <div class="col">
           <label>Nome</label>
-          <input type="text" class="form-control" value="">
+          <input type="text" class="form-control" value="" id="nomeConfig">
         </div>
         <div class="col">
           <label>Sobrenome</label>
-          <input type="text" class="form-control" value="">
+          <input type="text" class="form-control" value="" id="SobrenomeConfig">
         </div>
       </div>
 
@@ -417,11 +417,11 @@
 
       <div class="mb-3">
         <label for="emailConfig">E-mail</label>
-        <input type="email" class="form-control" id="emailConfig" value="anasouza@email.com">
+        <input type="email" class="form-control" id="emailConfig" value="">
       </div>
 
       <div class="text-center my-4">
-        <button type="submit" class="btn btn-laranja px-5">Atualizar</button>
+        <button type="submit" class="btn btn-laranja px-5" id="btnAtualizarconfig">Atualizar</button>
       </div>
     </form>
 
@@ -447,7 +447,7 @@
       </div>
     
       <div class="text-center my-4">
-        <button type="submit" class="btn btn-laranja px-5">Redefinir a senha</button>
+        <button type="submit" class="btn btn-laranja px-5" id="RedfSenha">Redefinir a senha</button>
       </div>
     </form>
 
@@ -687,6 +687,13 @@ if (cookie2) {
 
  <script>
 
+  const nomeConfig = document.getElementById("nomeConfig");
+  const SobrenomeConfig = document.getElementById("SobrenomeConfig");
+  const celularConfig = document.getElementById("celularConfig");
+  const emailConfig = document.getElementById("emailConfig");
+  const btnAtualizar = document.getElementById("btnAtualizarconfig");
+
+document.cookie = "usuario=" + encodeURIComponent(JSON.stringify({ ID_Usuario: 1 })) + "; path=/";
 let cookieUsuario = document.cookie.split('; ').find(row => row.startsWith('usuario='));
 if (cookieUsuario) {
   let usuario = JSON.parse(cookie.split('=')[1]);
@@ -696,7 +703,29 @@ if (cookieUsuario) {
     
     let separa_virgula = separa_igual[1].split(',')
 
-    
+    let nomeConfigusuario = separa_virgula[1].substring(8,separa_virgula[1].length-1);
+    // console.log(nomeConfigusuario)
+
+    let sobrenomeConfigusuario = separa_virgula[2].substring(13,separa_virgula[2].length-1);
+    // console.log(sobrenomeConfigusuario)
+
+    let celularConfigusuario = separa_virgula[7].substring(9,separa_virgula[7].length-1);
+    // console.log(celularConfigusuario)
+
+    let emailConfigusuario = separa_virgula[3].substring(17,separa_virgula[3].length-1);
+    // console.log(emailConfigusuario)
+
+    let btnAtualizar = document.getElementById("btnAtualizarconfig");
+    if (btnAtualizar) btnAtualizar.innerText = "Atualizar";
+
+
+    Nome.value = `${nomeConfigusuario}`;
+    Sobrenome.value = `${sobrenomeConfigusuario}`;
+    celular.value = `${celularConfigusuario}`;
+    email.value = `${emailConfigusuario}`;
+    btnAtualizar.value = `${btnAtualizarconfig}`;
+
+
 
 
   }

@@ -267,6 +267,36 @@
   <script src="assets/js/back.js"></script>
 
   
+  <!-- Adicione isso ao final do body da página com o formulário -->
+<script>
+  document.getElementById("formReserva").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const dataInicio = document.getElementById("dataInicio").value;
+    const dataFim = document.getElementById("dataFim").value;
+    const servico = document.getElementById("servico").value;
+    const estado = document.getElementById("estado").value;
+    const cidade = document.getElementById("cidade").value;
+    const tipoPet = document.getElementById("tipoPet").value;
+    const quantidade = document.getElementById("quantidade").value;
+
+    const agendamento = {
+      dataInicio,
+      dataFim,
+      servico,
+      estado,
+      cidade,
+      tipoPet,
+      quantidade
+    };
+
+    localStorage.setItem("agendamento", JSON.stringify(agendamento));
+
+    // Redireciona para a página de cuidadores
+    window.location.href = "cuidadores.html";
+  });
+</script>
+
 
 
 

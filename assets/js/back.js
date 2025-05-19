@@ -183,13 +183,7 @@ async function alterarPerfil2() {
 // Area de configuração
 // Atualizar dados pessoais
 
-// Obter ID do usuário a partir do cookie
-document.getElementById('btnAtualizar').onclick = () => {
-  const Nome = document.getElementById("nomeConfig").value;
-  const Sobrenome = document.getElementById("sobrenomeConfig").value;
-  const Celular = document.getElementById("celularConfig").value;
-  const Email_usuario = document.getElementById("emailConfig").value;
-
+function carregarDadosDoPerfil() {
   const cookieUsuario = document.cookie
     .split('; ')
     .find(row => row.startsWith('usuario='));
@@ -204,31 +198,75 @@ document.getElementById('btnAtualizar').onclick = () => {
     const usuarioObj = JSON.parse(decodeURIComponent(cookieUsuario.split('=')[1]));
     ID_Usuario = usuarioObj.ID_Usuario;
   } catch (e) {
-    alert("Erro ao ler dados do cookie.");
+    alert("Erro ao ler o cookie do usuário.");
     return;
   }
 
-  const data = {
-    Nome,
-    Sobrenome,
-    Celular,
-    Email_usuario
-  };
+  fetch(`http://127.0.0.1:3000/meu-perfil/config/${ID_Usuario}`)
+    .then(res => {
+      if (!res.ok) throw new Error("Erro ao buscar dados.");
+      return res.json();
+    })
+    .then(user => {
+      // ATENÇÃO: user pode vir como array se o backend devolve result inteiro!
+      if (Array.isArray(user)) user = user[0];
 
-  fetch(`http://127.0.0.1:3000/meu-perfil/config/${ID_Usuario}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  })
-    .then(res => res.json())
-    .then(json => {
-      alert(json.msg);
+      document.getElementById("nomeConfig").value = user.Nome || '';
+      document.getElementById("sobrenomeConfig").value = user.Sobrenome || '';
+      document.getElementById("emailConfig").value = user.Email_usuario || '';
+      document.getElementById("celularConfig").value = user.Celular || '';
     })
     .catch(err => {
-      console.error("Erro ao atualizar perfil:", err);
-      alert("Erro ao atualizar perfil.");
+      console.error("Erro ao carregar dados do perfil:", err);
+      alert("Erro ao carregar dados do perfil.");
     });
-};
+}
+
+
+// Obter ID do usuário a partir do cookie
+// document.getElementById('btnAtualizarconfig').onclick = configuracoes;
+
+// function configuracoes() {
+//   const Nome = document.getElementById("nomeConfig").value;
+//   const Sobrenome = document.getElementById("sobrenomeConfig").value;
+//   const Celular = document.getElementById("celularConfig").value;
+//   const Email_usuario = document.getElementById("emailConfig").value;
+
+//   const cookieUsuario = document.cookie
+//     .split('; ')
+//     .find(row => row.startsWith('usuario='));
+
+//   if (!cookieUsuario) {
+//     alert("Usuário não encontrado no cookie.");
+//     return;
+//   }
+
+//   let ID_Usuario;
+//   try {
+//     const usuarioObj = JSON.parse(decodeURIComponent(cookieUsuario.split('=')[1]));
+//     ID_Usuario = usuarioObj.ID_Usuario;
+//   } catch (e) {
+//     alert("Erro ao ler dados do cookie.");
+//     return;
+//   }
+
+//   const data = { Nome, Sobrenome, Celular, Email_usuario };
+
+//   fetch(`http://127.0.0.1:3000/meu-perfil/config/${ID_Usuario}`, {
+//     method: 'PUT',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify(data)
+//   })
+//     .then(res => res.json())
+//     .then(json => {
+//       alert(json.msg);
+//     })
+//     .catch(err => {
+//       console.error("Erro ao atualizar perfil:", err);
+//       alert("Erro ao atualizar perfil.");
+//     });
+// }
+
 
 
 // Atualizar senha
@@ -267,6 +305,10 @@ document.getElementById("formRedefinirSenha").addEventListener("submit", async f
 //     icon.classList.toggle("bi-eye-slash");
 //   });
 // });
+
+
+
+// =====================================
 
 
 

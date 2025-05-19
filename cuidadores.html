@@ -316,5 +316,23 @@
   <script src="assets/js/script.js"></script>
   <script src="assets/js/back.js"></script>
 
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const agendamento = JSON.parse(localStorage.getItem("agendamento"));
+  
+      if (agendamento) {
+        document.getElementById("servico").value = agendamento.servico;
+        document.getElementById("estado").value = agendamento.estado;
+        document.getElementById("cidade").value = agendamento.cidade;
+        document.getElementById("tipoPet").value = agendamento.tipoPet;
+      }
+  
+      // Aqui você pode aplicar filtros automáticos ou mostrar resultados personalizados
+    });
+  </script>
+  
+
+
 </body>
 </html>
