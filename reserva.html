@@ -368,5 +368,41 @@ document.getElementById('buscarcep').addEventListener('blur', async () => {
 <script src="assets/js/script.js"></script>
 <script src="assets/js/back.js"></script>
 
+
+<script>
+  async function confirmarReserva() {
+    // Valores fictícios por enquanto (depois você pode pegar do session/localStorage)
+    const ID_Usuario = 1;  // ⚠️ Pegar dinamicamente de quem estiver logado
+    const ID_Servico = 2;  // ⚠️ Esse valor pode vir do botão ou URL (ex: João Pereira = 2)
+    const ID_Pet = 3;      // ⚠️ Também precisa vir do pet selecionado no select
+
+    try {
+      const response = await fetch('http://localhost:3000/confirmar_reserva', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ ID_Usuario, ID_Servico, ID_Pet })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Reserva confirmada com sucesso!');
+        window.location.href = 'pagamento.html';
+      } else {
+        alert(`Erro ao confirmar reserva: ${data.msg}`);
+      }
+
+    } catch (error) {
+      console.error('Erro na requisição:', error);
+      alert('Erro na requisição. Verifique o console.');
+    }
+  }
+</script>
+
+
+
+
 </body>
 </html>

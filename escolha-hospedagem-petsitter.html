@@ -275,7 +275,8 @@
     const dataInicio = document.getElementById("dataInicio").value;
     const dataFim = document.getElementById("dataFim").value;
     const servico = document.getElementById("servico").value;
-    const estado = document.getElementById("estado").value;
+    const estadoId = document.getElementById("estado");
+    const estadoSelecionado = estadoId.options[estadoId.selectedIndex].text;
     const cidade = document.getElementById("cidade").value;
     const tipoPet = document.getElementById("tipoPet").value;
     const quantidade = document.getElementById("quantidade").value;
@@ -284,14 +285,14 @@
       dataInicio,
       dataFim,
       servico,
-      estado,
+      estadoId,
+      estadoSelecionado,
       cidade,
       tipoPet,
       quantidade
     };
 
     localStorage.setItem("agendamento", JSON.stringify(agendamento));
-
     // Redireciona para a página de cuidadores
     window.location.href = "cuidadores.html";
   });
