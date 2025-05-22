@@ -9,7 +9,7 @@ const confirmPassword = document.getElementById("confirmPassword");
   if (registerPassword.value != confirmPassword.value) {
     return alert("As senhas não coincidem.")
   }
-  fetch("http://127.0.0.1:3000/cad_user",{
+  fetch("http://10.26.45.21:3000/cad_user",{
     method:"POST",
     headers:{
       "accept":"application/json",
@@ -40,9 +40,10 @@ const confirmPassword = document.getElementById("confirmPassword");
 
 const btnLogin = document.getElementById('btnLogin')
 btnLogin.onclick = () => {
+  let idusuario = 0;
   const loginEmail = document.getElementById("loginEmail");
   const loginPassword = document.getElementById("loginPassword");
-  fetch("http://127.0.0.1:3000/login",{
+  fetch("http://10.26.45.21:3000/login",{
     method:"POST",
     headers:{
       "accept":"application/json",
@@ -65,11 +66,12 @@ btnLogin.onclick = () => {
           Email_usuario: dados.usuario.email,
           Foto_usuario: dados.usuario.foto
         }
-        document.cookie = `usuario=${JSON.stringify(usuario)};`
-        window.location.href = "meu-perfil.html#perfil";
+        idusuario = dados.usuario.id
+        console.log(usuario)
+        document.cookie = `usuario=${JSON.stringify(usuario)};`       
 
       alert(dados.msg);
-      return window.location.href = "meu-perfil.html#perfil";
+      return window.location.href = `meu-perfil.html?idusuario=${idusuario}#perfil`;
       }
     })
     .catch ((err) => {
@@ -87,23 +89,24 @@ async function alterarPerfil2() {
     alert("Usuário não autenticado.");
     return;
   }
+ console.log(cookie)
+ let idusuario = window.location.search
+ idusuario = idusuario.substring(11,idusuario.length);
 
-  let usuario = JSON.parse(cookie.split('=')[1]);
-
-  const dadosPessoais = {
-    CPF: document.getElementById("CPF").value,
-    RG: document.getElementById("RG").value,
-    Data_Nascimento: document.getElementById("nascimento").value,
-    Genero: document.getElementById("genero").value,
-    Celular: document.getElementById("Celular").value,
-    CEP: document.getElementById("cep").value,
-    Endereco: document.getElementById("endereco").value,
-    Numero: document.getElementById("numero").value,
-    Bairro: document.getElementById("bairro").value,
-    Cidade: document.getElementById("cidade").value,
-    Estado: document.getElementById("estado").value,
+  //   const dadosPessoais = {
+  //   CPF: document.getElementById("CPF").value,
+  //   RG: document.getElementById("RG").value,
+  //   Data_Nascimento: document.getElementById("nascimento").value,
+  //   Genero: document.getElementById("genero").value,
+  //   Celular: document.getElementById("Celular").value,
+  //   CEP: document.getElementById("cep").value,
+  //   Endereco: document.getElementById("endereco").value,
+  //   Numero: document.getElementById("numero").value,
+  //   Bairro: document.getElementById("bairro").value,
+  //   Cidade: document.getElementById("cidade").value,
+  //   Estado: document.getElementById("estado").value,
     
-  };
+  // };
 
   const dadosUsuario = {
     Tipo_usuario: document.getElementById("tipoUsuario").value,
@@ -112,15 +115,15 @@ async function alterarPerfil2() {
   };
 
   try {
-    const respostaUsuario = await fetch(`http://127.0.0.1:3000/meu-perfil/${usuario.ID_Usuario}`, {
+    const respostaUsuario = await fetch(`http://10.26.45.21:3000/meu-perfil/${idusuario}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(dadosUsuario)
-    });
+    })
 
-    const respostaPessoais = await fetch(`http://127.0.0.1:3000/meu-perfil/alterar-dados-pessoais/${usuario.ID_Usuario}`, {
+    const respostaPessoais = await fetch(`http://10.26.45.21:3000/meu-perfil/alterar-dados-pessoais/${idusuario}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -138,7 +141,7 @@ async function alterarPerfil2() {
     Cidade: document.getElementById("cidade").value,
     Estado: document.getElementById("estado").value,
     Foto_usuario: document.getElementById("uploadFoto").value
-      })
+    })
     }).then((res)=> res.json())
     .then((rs)=>{
       alert(rs.msg);
@@ -202,7 +205,7 @@ function carregarDadosDoPerfil() {
     return;
   }
 
-  fetch(`http://127.0.0.1:3000/meu-perfil/config/${ID_Usuario}`)
+  fetch(`http://10.26.45.21:3000/meu-perfil/config/${ID_Usuario}`)
     .then(res => {
       if (!res.ok) throw new Error("Erro ao buscar dados.");
       return res.json();
@@ -252,7 +255,7 @@ function carregarDadosDoPerfil() {
 
 //   const data = { Nome, Sobrenome, Celular, Email_usuario };
 
-//   fetch(`http://127.0.0.1:3000/meu-perfil/config/${ID_Usuario}`, {
+//   fetch(`http://10.26.45.21:3000/meu-perfil/config/${ID_Usuario}`, {
 //     method: 'PUT',
 //     headers: { 'Content-Type': 'application/json' },
 //     body: JSON.stringify(data)
@@ -281,7 +284,7 @@ document.getElementById("formRedefinirSenha").addEventListener("submit", async f
   }
 
   try {
-    const res = await fetch(`http://127.0.0.1:3000/meu-perfil/config/senha/${ID_Usuario}`, {
+    const res = await fetch(`http://10.26.45.21:3000/meu-perfil/config/senha/${ID_Usuario}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ Senha_usuario: novaSenha })
