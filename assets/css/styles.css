@@ -118,7 +118,7 @@ body {
   }
   
   .btn-topo:hover {
-    background-color: #ea700b;
+    background-color: rgb(216, 99, 3);
     color: white; /* Garante que o texto continue branco */
   }
   
@@ -139,7 +139,7 @@ body {
 }
 
 .btn-orange:hover {
-  background-color: #ea700b; 
+  background-color: rgb(216, 99, 3); 
   color: white; /* Garante que o texto continue branco */
 }
 
