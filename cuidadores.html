@@ -193,7 +193,7 @@
   
       <!-- Lista de Cuidadores -->
 
-      <div class="col-md-8">
+      <div class="col-md-8" id="box-cuidadores">
         <div class="card-cuidadores">
           <div class="d-flex align-items-center">
             <img src="assets/img/joaopereira.jpg" alt="Foto cuidador">
@@ -332,9 +332,73 @@
   
       // Aqui você pode aplicar filtros automáticos ou mostrar resultados personalizados
     });
+
+
+    let url = window.location.search
+    console.log(url.split('='))
+    let cidade_url = url.split('=')[1]
+    cidade_url = (cidade_url.substring(4,cidade_url.length-10))
+
+    let estado_url = url.split('=')[2]
+    estado_url = (estado_url.substring( 3,estado_url.length-11))
+    console.log(estado_url)
+
+    let servico_url = url.split('=')[3]
+    servico_url = (servico_url.substring(3,servico_url.length-3))
+    console.log(servico_url)
+    
+fetch(`http://localhost:3000/reserva/filtro/`,{
+      method:"POST",
+      headers: {
+        "accept":"application/json",
+        "Content-Type": "application/json"
+      },
+      body:JSON.stringify({
+        cidade:cidade_url,
+        estado:estado_url,
+        tiposervico:servico_url,
+      }
+      )
+    })
+    .then((rs)=>rs.json())
+    .then((dados)=>{
+
+      let saida = ""
+
+      dados.payload.map((dt)=>{
+        saida += `
+        <div class="card-cuidadores">
+          <div class="d-flex align-items-center">
+            <img src="${dt.Foto_usuario}" alt="Foto cuidador">
+            <div class="ms-3">
+              <strong>${dt.Nome} ${dt.Sobrenome}</strong><br>
+              <!-- Estrelas de avaliação -->
+              <div class="text-warning">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <i class="far fa-star"></i>
+              </div>
+              <small>${dt.Cidade} - ${dt.Estado}</small>
+            </div>
+          </div>
+          <div class="text-end">
+            <div><strong>R$ ${dt.Preco_servico}</strong> <small>/dia</small></div>
+            <a href="reserva.html" class="btn btn-reserva mt-2">Reservar</a>
+          </div>       
+        `
+      })
+      document.getElementById("box-cuidadores").innerHTML = saida;
+
+    })
+    .catch((erro)=>{
+      console.error("Erro ao buscar cuidadores:", erro);
+    });
+
+
   </script>
   
-
 
 </body>
 </html>

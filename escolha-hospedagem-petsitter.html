@@ -166,17 +166,17 @@
           <div class="row mb-3">
             <div class="col">
               <label class="form-label">A partir de</label>
-              <input type="date" class="form-control" id="dataInicio" />
+              <input type="date" class="form-control" id="dataInicio" name="dataInicio" />
             </div>
             <div class="col">
               <label class="form-label">Até quando?</label>
-              <input type="date" class="form-control" id="dataFim" />
+              <input type="date" class="form-control" id="dataFim" name="dataFim" />
             </div>
           </div>
 
           <div class="mb-3">
             <label class="form-label">Serviço</label>
-            <select class="form-select" id="servico">
+            <select class="form-select" id="servico"  name="servico">
               <option selected>Pet Sitter</option>
               <option>Hospedagem</option>
             </select>
@@ -282,20 +282,21 @@
     const tipoPet = document.getElementById("tipoPet").value;
     const quantidade = document.getElementById("quantidade").value;
 
-    const agendamento = {
-      dataInicio,
-      dataFim,
-      servico,
-      estadoId,
-      estadoSelecionado,
-      cidade,
-      tipoPet,
-      quantidade
-    };
+   
+    // const agendamento = {
+    //   dataInicio,
+    //   dataFim,
+    //   servico,
+    //   estadoId,
+    //   estadoSelecionado,
+    //   cidade,
+    //   tipoPet,
+    //   quantidade
+    // };
 
-    localStorage.setItem("agendamento", JSON.stringify(agendamento));
-    // Redireciona para a página de cuidadores
-    window.location.href = "cuidadores.html";
+    // localStorage.setItem("agendamento", JSON.stringify(agendamento));
+    // // Redireciona para a página de cuidadores
+    window.location.href = `cuidadores.html?cidade='${cidade}'&estado='${estadoSelecionado}'&servico='${servico}'`;
   });
 </script>
 
