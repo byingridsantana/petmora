@@ -281,7 +281,7 @@ function mostrarCamposAdicionais() {
   const tipo = document.getElementById("tipoUsuario").value;
   const campos = document.getElementById("camposCuidadora");
 
-  if (tipo === "cuidadora" || tipo === "ambas") {
+  if (tipo === "Cuidador" || tipo === "Cuidador/Tutor") {
     campos.style.display = "block";
   } else {
     campos.style.display = "none";

@@ -140,7 +140,10 @@ async function alterarPerfil2() {
     Bairro: document.getElementById("bairro").value,
     Cidade: document.getElementById("cidade").value,
     Estado: document.getElementById("estado").value,
-    Foto_usuario: document.getElementById("uploadFoto").value
+    Foto_usuario: document.getElementById("uploadFoto").value,
+    Tipo_servico: document.getElementById("tipoServico").value,
+    Preco_servico: document.getElementById("precoDiaria").value,
+    Porte_pet: document.getElementById("tipoPorte").value,
     })
     }).then((res)=> res.json())
     .then((rs)=>{

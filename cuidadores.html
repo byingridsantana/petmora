@@ -164,7 +164,7 @@
           <form>
             <div class="mb-3">
               <label for="servico" class="form-label">Serviço</label>
-              <select class="form-select" id="servico">
+              <select class="form-select" id="servico" name="servico">
                 <option>Hospedagem</option>
                 <option>Pet Sitter</option>              
               </select>
@@ -386,7 +386,8 @@ fetch(`http://localhost:3000/reserva/filtro/`,{
           <div class="text-end">
             <div><strong>R$ ${dt.Preco_servico}</strong> <small>/dia</small></div>
             <a href="reserva.html" class="btn btn-reserva mt-2">Reservar</a>
-          </div>       
+          </div>  
+          </div>     
         `
       })
       document.getElementById("box-cuidadores").innerHTML = saida;
@@ -395,6 +396,9 @@ fetch(`http://localhost:3000/reserva/filtro/`,{
     .catch((erro)=>{
       console.error("Erro ao buscar cuidadores:", erro);
     });
+
+    
+
 
 
   </script>
