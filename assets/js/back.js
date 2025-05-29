@@ -143,7 +143,7 @@ async function alterarPerfil2() {
     Foto_usuario: document.getElementById("uploadFoto").value,
     Tipo_servico: document.getElementById("tipoServico").value,
     Preco_servico: document.getElementById("precoDiaria").value,
-    Porte_pet: document.getElementById("tipoPorte").value,
+    Tipo_porte: document.getElementById("tipoPorte").value,
     })
     }).then((res)=> res.json())
     .then((rs)=>{
@@ -169,27 +169,73 @@ async function alterarPerfil2() {
 // ==================================== 
 
 // Area pet
+/*
+function meusPets() {
+    const cookiePet = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('usuario='));
+
+    if (!cookiePet) {
+      alert("Usuário não encontrado no cookie.");
+      return;
+    }
+
+    let ID_Usuario;
+    try {
+      const usuarioObj = JSON.parse(decodeURIComponent(cookiePet.split('=')[1]));
+      ID_Usuario = usuarioObj.ID_Usuario;
+    } catch (e) {
+      alert("Erro ao ler o cookie do usuário.");
+      return;
+    }
+
+     fetch(`http://10.26.45.21:3000/meu-perfil/pets/${ID_Usuario}`, {
+     method: 'put',
+    headers: { 'Content-Type': 'application/json' },
+    .then(res => {
+      if (!res.ok) throw new Error("Erro ao buscar pets.");
+      return res.json();
 
 
+    })
 
+    req.body: JSON.stringify({ ID_Usuario })
+  })
 
+    .then 
+((pets) => {
+      const petsContainer = document.getElementById("petsContainer");
+      petsContainer.innerHTML = ''; // Limpa o container
 
+      if (pets.length === 0) {
+        petsContainer.innerHTML = '<p>Nenhum pet cadastrado.</p>';
+        return;
+      }
 
+      pets.forEach(pet => {
+        const petDiv = document.createElement("div");
+        petDiv.className = "pet-item";
+        petDiv.innerHTML = `
+          <h3>${pet.Nome_pet}</h3>
+          <p>Tipo: ${pet.Tipo_pet}</p>
+          <p>Porte: ${pet.Porte_pet}</p>
+          <p>Raça: ${pet.Raca_pet}</p>
+          <button onclick="editarPet(${pet.ID_Pet})">Editar</button>
+          <button onclick="deletarPet(${pet.ID_Pet})">Deletar</button>
+        `;
+        petsContainer.appendChild(petDiv);
+      });
+    })
+}
 
-
-
-
-
-
-
-
+*/
 
 // =====================================
 
 // Area de configuração
 // Atualizar dados pessoais
 
-function carregarDadosDoPerfil() {
+function atualizarConfiguracoesPerfil() {
   const cookieUsuario = document.cookie
     .split('; ')
     .find(row => row.startsWith('usuario='));
@@ -208,15 +254,22 @@ function carregarDadosDoPerfil() {
     return;
   }
 
-  fetch(`http://10.26.45.21:3000/meu-perfil/config/${ID_Usuario}`)
-    .then(res => {
-      if (!res.ok) throw new Error("Erro ao buscar dados.");
-      return res.json();
-    })
-    .then(user => {
+  fetch(`http://10.26.45.21:3000/meu-perfil/config/${ID_Usuario}`,{
+    method:"PUT",
+    headers:{
+      "accept":"application/json",
+      "content-type":"application/json"
+    },
+    body: JSON.stringify({
+      Nome: document.getElementById("nomeConfig").value,
+      Sobrenome: document.getElementById("sobrenomeConfig").value,
+      Celular: document.getElementById("celularConfig").value,
+      Email_usuario: document.getElementById("emailConfig").value
+    })  
+  })
+    .then((res) => res.json())
+    .then((user) => {
       // ATENÇÃO: user pode vir como array se o backend devolve result inteiro!
-      if (Array.isArray(user)) user = user[0];
-
       document.getElementById("nomeConfig").value = user.Nome || '';
       document.getElementById("sobrenomeConfig").value = user.Sobrenome || '';
       document.getElementById("emailConfig").value = user.Email_usuario || '';
@@ -276,8 +329,28 @@ function carregarDadosDoPerfil() {
 
 
 // Atualizar senha
-document.getElementById("formRedefinirSenha").addEventListener("submit", async function (e) {
-  e.preventDefault();
+async function redefinirSenha(){
+
+  const cookieUsuario = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('usuario='));
+
+  if (!cookieUsuario) {
+    alert("Usuário não encontrado no cookie.");
+    return;
+  }
+
+  let ID_Usuario;
+  try {
+    const usuarioObj = JSON.parse(decodeURIComponent(cookieUsuario.split('=')[1]));
+    ID_Usuario = usuarioObj.ID_Usuario;
+  } catch (e) {
+    alert("Erro ao ler o cookie do usuário.");
+    return;
+  }
+
+
+
 
   const novaSenha = document.getElementById("novaSenha").value;
   const repitaSenha = document.getElementById("repitaSenha").value;
@@ -299,7 +372,8 @@ document.getElementById("formRedefinirSenha").addEventListener("submit", async f
     console.error("Erro ao atualizar senha:", err);
     alert("Erro ao redefinir a senha.");
   }
-});
+
+}
 
 // Mostrar/ocultar senha
 // ["toggleNovaSenha", "toggleRepitaSenha"].forEach(id => {
