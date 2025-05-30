@@ -386,6 +386,49 @@ async function redefinirSenha(){
 //   });
 // });
 
+// Meu Pet
+
+async function salvarPet() {
+  // Pega os dados do formulário
+  const petData = {
+    Nome: document.getElementById('nomePet').value,
+    Especie: document.getElementById('especiePet').value,
+    Sexo: document.getElementById('sexoPet').value,
+    Idade: document.getElementById('idadePet').value,
+    Raca: document.getElementById('racaPet').value,
+    Porte: document.getElementById('portePet').value,
+    Castrado: document.getElementById('castradoPet').value,
+    Restricoes: document.getElementById('restricoesPet').value,
+    Comportamento: document.getElementById('comportamentoPet').value,
+    Preferencias: document.getElementById('preferenciasPet').value,
+    Foto_Pet: null // Upload fica pra depois
+  };
+
+  try {
+    const response = await fetch('http://localhost:3000/cad_pet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(petData)
+    });
+
+    const json = await response.json();
+
+    if (!response.ok) {
+      alert(json.message || "Erro ao salvar o pet.");
+      return;
+    }
+
+    alert(json.message || "Pet cadastrado com sucesso!");
+
+    // Fecha o modal
+    const modal = bootstrap.Modal.getInstance(document.getElementById('modalPet'));
+    modal.hide();    
+
+  } catch (err) {
+    console.error('Erro ao salvar pet:', err);
+    alert("Erro na comunicação com o servidor.");
+  }
+}
 
 
 // =====================================
