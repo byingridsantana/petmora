@@ -390,8 +390,30 @@ async function redefinirSenha(){
 // Meu Pet
 
 async function salvarPet() {
+
+
+  const cookieUsuario = document.cookie
+  .split('; ')
+  .find(row => row.startsWith('usuario='));
+
+if (!cookieUsuario) {
+  alert("Usuário não encontrado no cookie.");
+  return;
+}
+
+let ID_Usuario;
+try {
+  const usuarioObj = JSON.parse(decodeURIComponent(cookieUsuario.split('=')[1]));
+  ID_Usuario = usuarioObj.ID_Usuario;
+} catch (e) {
+  alert("Erro ao ler o cookie do usuário.");
+  return;
+}
+
+
   // Pega os dados do formulário
   const petData = {
+    ID_Usuario: ID_Usuario, // Adiciona o ID do usuário
     Nome: document.getElementById('nomePet').value,
     Especie: document.getElementById('especiePet').value,
     Sexo: document.getElementById('sexoPet').value,
@@ -406,7 +428,7 @@ async function salvarPet() {
   };
 
   try {
-    const response = await fetch('http://10.26.45.21:3000/cad_pet', {
+    const response = await fetch(`http://10.26.45.21:3000/meu-perfil/${ID_Usuario}/cad-pet`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(petData)
@@ -418,8 +440,10 @@ async function salvarPet() {
       alert(json.message || "Erro ao salvar o pet.");
       return;
     }
-
+   
+    alert(Date.now())
     alert(json.message || "Pet cadastrado com sucesso!");
+    window.location.reload()
 
     // Fecha o modal
     const modal = bootstrap.Modal.getInstance(document.getElementById('modalPet'));
@@ -478,3 +502,86 @@ function deletarConta() {
 }
 
 
+// ======================================
+function enviarReserva() {
+  const reserva = {
+    Cuidador: "ID_do_Cuidador", // Substitua com o ID real se necessário
+    Tutor: "ID_do_Tutor",       // Substitua com o ID real se necessário
+    ID_Servico: "ID_Servico",   // Substitua se for um serviço específico
+    Preco_servico: document.getElementById("preco_servico").innerText.replace("R$", "").trim(),
+    qtd_pets: 1, // Ajuste conforme necessário
+    Porte_pet: document.getElementById("portePet").value,
+    Situacao: "Pendente", // ou outro status inicial
+    data_inicio: document.getElementById("data_inicio").value,
+    data_conclusao: document.getElementById("data_conclusao").value,
+    ID_Pet: document.getElementById("id_pet").value,
+    Periodo_entrada: document.getElementById("periodo_entrada").value,
+    Periodo_saida: document.getElementById("periodo_saida").value,
+    Instru_Pet: document.getElementById("instrucao_pet").value,
+    Itens_Pet: document.getElementById("itens_pet").value
+  };
+
+  fetch("https://10.26.45.21:3000/reserva/cad-hosp/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(reserva)
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Erro ao enviar os dados da reserva.");
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log("Reserva enviada com sucesso:", data);
+      alert("Reserva confirmada!");
+      // Redirecione ou limpe o formulário aqui se quiser
+    })
+    .catch(error => {
+      console.error("Erro na requisição:", error);
+      alert("Falha ao enviar a reserva. Tente novamente.");
+    });
+}
+
+
+
+
+function listarPetsReserva() {
+
+
+  const cookieUsuario = document.cookie
+  .split('; ')
+  .find(row => row.startsWith('usuario='));
+
+if (!cookieUsuario) {
+  alert("Usuário não encontrado no cookie.");
+  return;
+}
+
+let ID_Usuario;
+try {
+  const usuarioObj = JSON.parse(decodeURIComponent(cookieUsuario.split('=')[1]));
+  ID_Usuario = usuarioObj.ID_Usuario;
+} catch (e) {
+  alert("Erro ao ler o cookie do usuário.");
+  return;
+}
+
+
+  const lista = document.getElementById('id_pet');
+  lista.innerHTML = '';
+
+  fetch(`http://127.0.0.1:3000/meu-perfil/${ID_Usuario}/listar_pet`)
+  .then((res)=> res.json())
+  .then((pets) => {
+  pets.forEach(pet => {
+    let option = document.createElement('option');
+    option.value = pet.ID_Pet;
+    option.textContent = `${pet.Nome}`;
+    lista.appendChild(option);
+  }
+)
+})
+}

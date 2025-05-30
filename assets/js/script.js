@@ -320,30 +320,53 @@ let pets = [];
   }
 
   function renderizarPets() {
+
+
+    const cookieUsuario = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('usuario='));
+  
+  if (!cookieUsuario) {
+    alert("Usuário não encontrado no cookie.");
+    return;
+  }
+  
+  let ID_Usuario;
+  try {
+    const usuarioObj = JSON.parse(decodeURIComponent(cookieUsuario.split('=')[1]));
+    ID_Usuario = usuarioObj.ID_Usuario;
+  } catch (e) {
+    alert("Erro ao ler o cookie do usuário.");
+    return;
+  }
+
+
     const lista = document.getElementById('listaPets');
     lista.innerHTML = '';
 
+    fetch(`http://127.0.0.1:3000/meu-perfil/${ID_Usuario}/listar_pet`)
+    .then((res)=> res.json())
+    .then((pets) => {
     pets.forEach(pet => {
       const card = document.createElement('div');
       card.className = 'col-md-4 mb-4';
       card.innerHTML = `
         <div class="card shadow-sm">
-          <img src="${pet.foto || 'https://via.placeholder.com/300x200'}" class="card-img-top pet-img mx-auto mt-3" alt="Foto do Pet">
+          <img src="${pet.Foto_Pet || 'https://media.istockphoto.com/id/1433858575/pt/foto/man-stroking-his-old-dog.jpg?s=612x612&w=0&k=20&c=PIzNmza2NkJW_2hYrwWxGggGhP5DTe48ZJqVs329u1o='}" class="card-img-top pet-img mx-auto mt-3" alt="Foto do Pet">
           <div class="card-body text-center">
-            <h5 class="card-title">${pet.nome}</h5>
-            <p class="card-text text-muted">${pet.especie} - ${pet.raca}</p>
-            <button class="btn btn-outline-primary btn-sm" onclick="abrirModalEditarPet('${pet.id}')">Editar</button>
-            <button class="btn btn-outline-danger btn-sm" onclick="excluirPet('${pet.id}')">Excluir</button>
+            <h5 class="card-title">${pet.Nome}</h5>
+            <p class="card-text text-muted">${pet.Especie} - ${pet.Raca}</p>
+            <button class="btn btn-outline-primary btn-sm" onclick="abrirModalEditarPet('${pet.ID_Pet}')">Editar</button>
+            <button class="btn btn-outline-danger btn-sm" onclick="excluirPet('${pet.ID_Pet}')">Excluir</button>
           </div>
         </div>
       `;
       lista.appendChild(card);
     });
-  }
+  })
+}
 
-  document.getElementById('formPet').addEventListener('submit', function(event) {
-    event.preventDefault();
-
+function exibirPets(){
     const idEdicao = document.getElementById('idPetEdicao').value;
     const nome = document.getElementById('nomePet').value;
     const especie = document.getElementById('especiePet').value;
@@ -361,7 +384,7 @@ let pets = [];
     } else {
       salvarPet(idEdicao, nome, especie, raca, '');
     }
-  });
+  };
 
   function salvarPet(id, nome, especie, raca, foto) {
     if (id) {
@@ -456,4 +479,4 @@ function filtrarStatus(statusSelecionado) {
   });
 }
 
-// Menu de Login
+
