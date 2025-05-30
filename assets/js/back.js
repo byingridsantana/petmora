@@ -433,5 +433,47 @@ async function salvarPet() {
 
 // =====================================
 
+// Deletar conta 
+
+function deletarConta() {
+  const confirmacao = confirm("Tem certeza que deseja deletar sua conta? Essa ação é irreversível!");
+
+  if (!confirmacao) return;
+
+  // Recuperar ID_Usuario do cookie
+  const cookieUsuario = document.cookie.split('; ').find(row => row.startsWith('usuario='));
+  if (!cookieUsuario) {
+    alert("Usuário não encontrado no cookie.");
+    return;
+  }
+
+  let ID_Usuario;
+  try {
+    const usuarioObj = JSON.parse(decodeURIComponent(cookieUsuario.split('=')[1]));
+    ID_Usuario = usuarioObj.ID_Usuario;
+  } catch (e) {
+    alert("Erro ao ler o cookie do usuário.");
+    return;
+  }
+
+  // Enviar requisição DELETE para o backend
+  fetch(`http://localhost:3000/meu-perfil/config/${ID_Usuario}`, {
+    method: 'DELETE'
+  })
+    .then(res => res.json())
+    .then(json => {
+      alert(json.msg);
+
+      // Apagar cookie
+      document.cookie = "usuario=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
+      // Redirecionar para página de login ou home
+      window.location.href = "/index.html";
+    })
+    .catch(err => {
+      console.error("Erro ao deletar conta:", err);
+      alert("Erro ao deletar conta. Tente novamente.");
+    });
+}
 
 
