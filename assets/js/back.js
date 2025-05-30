@@ -115,13 +115,13 @@ async function alterarPerfil2() {
   };
 
   try {
-    const respostaUsuario = await fetch(`http://10.26.45.21:3000/meu-perfil/${idusuario}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(dadosUsuario)
-    })
+    // const respostaUsuario = await fetch(`http://10.26.45.21:3000/meu-perfil/${idusuario}`, {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify(dadosUsuario)
+    // })
 
     const respostaPessoais = await fetch(`http://10.26.45.21:3000/meu-perfil/alterar-dados-pessoais/${idusuario}`, {
       method: "PUT",
@@ -141,6 +141,7 @@ async function alterarPerfil2() {
     Cidade: document.getElementById("cidade").value,
     Estado: document.getElementById("estado").value,
     Foto_usuario: document.getElementById("uploadFoto").value,
+    Tipo_usuario: document.getElementById("tipoUsuario").value,
     Tipo_servico: document.getElementById("tipoServico").value,
     Preco_servico: document.getElementById("precoDiaria").value,
     Tipo_porte: document.getElementById("tipoPorte").value,
@@ -405,7 +406,7 @@ async function salvarPet() {
   };
 
   try {
-    const response = await fetch('http://localhost:3000/cad_pet', {
+    const response = await fetch('http://10.26.45.21:3000/cad_pet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(petData)
@@ -457,7 +458,7 @@ function deletarConta() {
   }
 
   // Enviar requisição DELETE para o backend
-  fetch(`http://localhost:3000/meu-perfil/config/${ID_Usuario}`, {
+  fetch(`http://10.26.45.21:3000/meu-perfil/config/${ID_Usuario}`, {
     method: 'DELETE'
   })
     .then(res => res.json())
