@@ -12,49 +12,51 @@
 </head>
 <body onload="listarPetsReserva()">    
     <!-- NAVBAR -->
-      <nav class="navbar navbar-expand-sm bg-body-tertiary navbar-shadow-bottom">
-        <div class="container">
+    <nav class="navbar navbar-expand-sm bg-body-tertiary navbar-shadow-bottom">
+      <div class="container">
           <a class="navbar-brand" href="index.html"><img src="assets/img/site-logo-petmora.png" alt="Logo"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
           </button>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Links do meio -->
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="petsitter.html">Encontre um Pet Sitter</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="hospedagem.html">Encontre uma Hospedagem</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="como_funciona.html">Como Funciona?</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="contato.html">Contato</a>
-              </li>
-            </ul>
-  
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="petsitter.html">Encontre um Pet Sitter</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="hospedagem.html">Encontre uma Hospedagem</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="como_funciona.html">Como Funciona?</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="contato.html">Contato</a>
+                  </li>
+              </ul>
 
-            <!-- Link de login/cadastro à direita -->
-            <ul class="navbar-nav mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#authModal">Entrar / Cadastrar-se</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+              <ul class="navbar-nav mb-2 mb-lg-0">
+                  <li class="nav-item" id="navItemLogin">
+                      <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#authModal">Entrar / Cadastrar-se</a>
+                  </li>
+                  <li class="nav-item dropdown" id="navItemUser" style="display: none;"> <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownUserLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <img src="" alt="Foto" class="rounded-circle me-2" width="32" height="32" id="navbarUserPhoto" style="display: none;"> Olá, <span id="navbarUserName">Usuário</span>
+                      </a>
+                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownUserLink">
+                          <li><a class="dropdown-item" href="meu-perfil.html">Meu Perfil</a></li> <li><a class="dropdown-item" href="minhareserva.html">Minhas Reservas</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="#" id="btnLogout">Sair</a></li>
+                      </ul>
+                  </li>
+              </ul>
+              </div>
+      </div>
+  </nav>
       <!-- FIM NAVBAR -->
 
 
-
-
-
-
-      <!-- Modal de Login/Cadastro -->
+ <!-- Modal de Login/Cadastro -->
 <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -181,7 +183,7 @@
   </div>
 
   <!-- Formulário de reserva -->
-  <form>
+  <form id="formReserva">
     <div class="row g-3">
 
       <!-- Datas e Períodos -->
@@ -211,13 +213,13 @@
 <!-- Pet e Localização -->
 <div class="col-md-3">
   <label class="form-label">Quais Pets?</label>
-  <select class="form-select" id="id_pet">
-    <option>Selecione seu pet</option>          
+  <select class="form-select" id="id_pet" required>
+    <option value="" disabled selected>Selecione seu Pet</option>         
   </select>
 </div>
 <div class="col-md-3">
   <label class="form-label">Tipo de Pet</label>
-  <select class="form-select" id="porte_pet">
+  <select class="form-select" id="porte_pet" required>
     <option>Cachorro</option>
     <option>Gato</option>
   </select>
