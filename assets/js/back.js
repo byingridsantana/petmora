@@ -483,9 +483,9 @@ function enviarReserva() {
   // }
 
   const reserva = {
-      Cuidador: document.getElementById("ID_do_Cuidador_hidden_input")?.value || "ID_do_Cuidador_Placeholder", // Precisa de um campo para o ID do cuidador
+      Cuidador: document.getElementById("id_cuidador")?.value, // Precisa de um campo para o ID do cuidador
       Tutor: getUserDataFromCookie()?.ID_Usuario, // Pega ID do tutor logado
-      ID_Servico: document.getElementById("ID_do_Servico_hidden_input")?.value || "ID_Servico_Placeholder", // Precisa de um campo para o ID do serviço
+      ID_Servico: document.getElementById("id_servico")?.value, // Precisa de um campo para o ID do serviço
       Preco_servico: document.getElementById("preco_servico")?.innerText.replace("R$", "").trim(),
       qtd_pets: 1, // Ajuste conforme necessário (ex: contar pets selecionados)
       Porte_pet: document.getElementById("portePet")?.value, // Este parece ser o tipo de pet na sua reserva.html ("Cachorro", "Gato")
@@ -501,6 +501,8 @@ function enviarReserva() {
       // Nome_Emergencia: document.getElementById("nome_emergencia")?.value,
       // Celular_Emergencia: document.getElementById("celular_emergencia")?.value,
   };
+
+  console.log(`Dados da reserva:`, reserva);
 
   if (!reserva.Tutor || !reserva.ID_Pet || !reserva.data_inicio || !reserva.data_conclusao) {
       return alert("Por favor, preencha todas as informações obrigatórias da reserva (Pet, datas). Faça login se necessário.");
@@ -524,7 +526,7 @@ function enviarReserva() {
            localStorage.setItem('idReservaParaPagamento', data.ID_Agendamento || data.ID_Servico);
       }
       localStorage.setItem('reservaConfirmadaDetalhes', JSON.stringify(reserva)); // Guarda os detalhes atuais
-      window.location.href = 'pagamento.html';
+      window.location.href = `pagamento.html?cuidador=${Cuidador}&tutor=${Tutor}&nome=${Nome}&sobrenome=${Sobrenome}&estado='${Estado}'&cidade=${Cidade}&pet=${Pet}&precoS=${dt.Preco_servico}&idservico=${ID_servico}&ins_pet${Instru_Pet}&itens_pet=${Itens_Pet}&data_inicio=${data_inicio}&data_conclusao=${data_conclusao}`; // Ajuste a URL conforme necessário
   })
   .catch(error => {
       console.error("Erro na requisição de reserva:", error);
@@ -659,24 +661,31 @@ async function carregarDadosPaginaReserva() {
       // Este endpoint deve retornar nome, foto_url, local (cidade/bairro), preço do serviço, etc.
       // Estou usando placeholder para a URL do fetch e dados de exemplo
       
-      // ------ INÍCIO: LÓGICA DE EXEMPLO DE FETCH (SUBSTITUA PELO SEU ENDPOINT REAL) ------
-      // const response = await fetch(`http://localhost:3000/api/cuidador-servico-detalhes?cuidadorId=${cuidadorId}&servicoId=${servicoId}`);
-      // if (!response.ok) {
-      //     throw new Error('Falha ao buscar dados do cuidador/serviço');
-      // }
-      // const dados = await response.json();
+    //   ------ INÍCIO: LÓGICA DE EXEMPLO DE FETCH (SUBSTITUA PELO SEU ENDPOINT REAL) ------
+      const response = await fetch(`http:localhost:3000/listar_cuidador/${ID_Usuario}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        
+      );
+      if (!response.ok) {
+          throw new Error('Falha ao buscar dados do cuidador/serviço');
+      } 
       // ------ FIM: LÓGICA DE EXEMPLO DE FETCH ------
 
       // ------ INÍCIO: DADOS MOCK (SUBSTITUA PELO RESULTADO DO FETCH REAL) ------
       // Simule a resposta do backend para teste, depois substitua pelo fetch real.
       // Seu backend deve buscar na tabela 'usuario', 'dados_pessoais', 'enderecos' e 'servicos'.
       const mockDadosCuidador = {
-          nome: "João Pereira (Mock)",
+          nome: "",
           sobrenome: "", // Adicione se tiver
-          foto_url: "../assets/img/joaopereira.jpg", // Caminho relativo se a página estiver em /pages/
-          cidade: "São Paulo",
-          bairro: "Carrão",
-          preco_servico: 100.00, // Preço base do serviço
+          foto_url: "", // Caminho relativo se a página estiver em /pages/
+          cidade: "",
+          bairro: "",
+          preco_servico: "", // Preço base do serviço
           // Adicione avaliação se tiver
       };
       // ------ FIM: DADOS MOCK ------
@@ -741,17 +750,17 @@ function enviarReserva() {
   const cuidadorId = formReserva.elements['cuidadorId'] ? formReserva.elements['cuidadorId'].value : null;
   const servicoId = formReserva.elements['servicoId'] ? formReserva.elements['servicoId'].value : null; // Pode ser ID do serviço do cuidador ou um serviço específico
 
-  // Validação básica inicial
-  if (!cuidadorId) { // servicoId pode ser opcional dependendo da sua lógica de como um serviço é escolhido
-      alert("Erro: Informações do cuidador não encontradas. Tente selecionar novamente.");
-      return;
-  }
+//   // Validação básica inicial
+//   if (!cuidadorId) { // servicoId pode ser opcional dependendo da sua lógica de como um serviço é escolhido
+//       alert("Erro: Informações do cuidador não encontradas. Tente selecionar novamente.");
+//       return;
+//   }
   
   // Coleta dos outros dados do formulário de reserva.html
   const reserva = {
-      Cuidador: cuidadorId, 
+      Cuidador: document.getElementById("id_cuidador")?.value,
       Tutor: ID_Tutor,
-      ID_Servico: servicoId || "DEFAULT_SERVICE_ID_IF_NEEDED", // Se servicoId não vier da URL, o backend pode usar um serviço padrão do cuidador
+      ID_Servico: document.getElementById("id_servico")?.value, // Se servicoId não vier da URL, o backend pode usar um serviço padrão do cuidador
       Preco_servico: document.getElementById("preco_servico")?.innerText.replace("R$", "").trim(), // Ou o valor do card do cuidador
       // qtd_pets: 1, // Ajuste se o usuário puder selecionar mais de um pet
       Porte_pet: document.getElementById("porte_pet")?.value, // Parece ser o 'Tipo de Pet' no seu form
@@ -806,9 +815,11 @@ function enviarReserva() {
       
       window.location.href = 'pagamento.html'; // Redireciona para a página de pagamento
   })
-  .catch(error => {
-      console.error("Erro na requisição de reserva:", error);
-      alert(error.msg || error.message || "Falha ao enviar a reserva. Tente novamente.");
-  });
+//   .catch(error => {
+//       console.error("Erro na requisição de reserva:", error);
+//       alert(error.msg || error.message || "Falha ao enviar a reserva. Tente novamente.");
+//   });
 }
+
+// pagamento 
 

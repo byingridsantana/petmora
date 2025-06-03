@@ -164,9 +164,11 @@
   <!-- Card do cuidador -->
   <div class="card mb-4 p-3 d-flex flex-row align-items-center justify-content-between">
     <div class="d-flex align-items-center">
-      <img src="assets/img/joaopereira.jpg" alt="Cuidador" class="rounded-circle me-3" style="width: 60px; height: 60px;" id="ID_do_Cuidador">
+      <img src="assets/img/" alt="Cuidador" class="rounded-circle me-3" style="width: 60px; height: 60px;" id="ID_do_Cuidador">
+      
       <div>
-        <strong></strong><br>
+        <strong id="nome_cuidador"></strong>
+        <strong id="sobrenome_cuidador"></strong><br>
         <div class="text-warning">
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
@@ -174,16 +176,21 @@
           <i class="fas fa-star-half-alt"></i>
           <i class="far fa-star"></i>
         </div>
-        <small></small>
+        <span id="tiposervico"></span> <br>
+        <span id="estado_cuidador"></span>
+        <span> - </span>
+      <span id="cidade_cuidador"></span>
       </div>
     </div>
     <div class="text-end">
-      <span></span>
+      <span> </span>
     </div>
   </div>
 
   <!-- Formulário de reserva -->
-  <form id="formReserva">
+  <form id="formReserva" onsubmit="return false;">
+    <input type="hidden" id="id_cuidador">
+    <input type="hidden" id="id_servico">
     <div class="row g-3">
 
       <!-- Datas e Períodos -->
@@ -264,7 +271,7 @@
 
 <!-- Valor total -->
 <div class="d-flex justify-content-end">
-  <strong>Valor Total</strong>: R$<span id="preco_servico">100,00</span>
+  <strong>Valor Total</strong>: R$<span id="preco_servico"></span>
 </div>
 
 <!-- Contato de Emergência -->
@@ -370,6 +377,94 @@ document.getElementById('buscarcep').addEventListener('blur', async () => {
 
 
 <script>
+let url = window.location.search
+
+
+console.log(url)
+
+
+    console.log(url.split('='))
+
+
+    let dados_url = url.split('=')
+    let id_cuidador = dados_url[1].split('&')[0]
+    document.getElementById('id_cuidador').value = id_cuidador
+    console.log(id_cuidador)
+
+
+    let nome_url = dados_url[2].split('&')[0]
+
+    document.getElementById('nome_cuidador').innerText = nome_url
+
+    let sobrenome_url = dados_url[3].split('&')[0]
+
+    document.getElementById('sobrenome_cuidador').innerText = sobrenome_url
+
+    let tiposervico = dados_url[6].split('&')[0]
+ 
+    document.getElementById('tiposervico').innerText = tiposervico
+
+
+    let estado_url = dados_url[4].split('&')[0]
+
+    document.getElementById('estado_cuidador').innerText = estado_url.replace("%27", ' ').replace("%C3%A3", 'ã').replace("%20", ' ').replace("%27", '')
+
+    let cidade_url = dados_url[5].split('&')[0]
+
+    document.getElementById('cidade_cuidador').innerText = cidade_url.replace("%27", ' ').replace("%C3%A3", 'ã').replace("%20", ' ').replace("%27", '')
+
+    let preco_servico = dados_url[7].split('&')[0]
+    document.getElementById('preco_servico').innerText = preco_servico.replace("%2C", ',')
+
+
+    let id_servico = dados_url[8]
+    document.getElementById('id_servico').value = id_servico
+
+    
+
+
+    // let id_usuario = url.split('?')[0]
+    // id_usuario = (id_usuario.substring(0,id_usuario.length-10))
+    // console.log(`idusuario = ${id_usuario}`)
+
+    // console.log(id_usuario)
+
+    // console.log(url.split('?'))
+    // let nome_url = url.split('?')[0]
+    // nome_url = (nome_url.substring(5,nome_url.length-10))
+
+    // console.log(nome_url)
+
+    // console.log(url.split('&')[1])
+    // let sobrenome_url = url.split('&')[1]
+    // sobrenome_url = (sobrenome_url.substring(9,sobrenome_url.length-10))
+
+    // console.log(sobrenome_url)
+
+    // console.log(url.split('='))
+    // let cidade_url = url.split('=')[1]
+    // cidade_url = (cidade_url.substring(4,cidade_url.length-10))
+
+    // console.log(cidade_url)
+
+    // let estado_url = url.split('=')[2]
+    // estado_url = (estado_url.substring( 3,estado_url.length-11))
+    // console.log(estado_url)
+
+</script>
+
+    
+
+
+
+
+
+
+
+
+
+<!-- // ======================================================================================================
+
   async function confirmarReserva() {
     // Valores fictícios por enquanto (depois você pode pegar do session/localStorage)
     const ID_Usuario = 1;  // ⚠️ Pegar dinamicamente de quem estiver logado
@@ -398,8 +493,8 @@ document.getElementById('buscarcep').addEventListener('blur', async () => {
       console.error('Erro na requisição:', error);
       alert('Erro na requisição. Verifique o console.');
     }
-  }
-</script>
+  } -->
+
 
 
 

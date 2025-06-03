@@ -152,7 +152,7 @@
       <div class="col-md-4">
         <div class="filtro-container">
           <h5 class="mb-4">Filtro</h5>
-          <form>
+          <form onsubmit="return false">
             <div class="mb-3">
               <label for="servico" class="form-label">Serviço</label>
               <select class="form-select" id="servico" name="servico">
@@ -184,13 +184,13 @@
   
       <!-- Lista de Cuidadores -->
 
-      <div class="col-md-8" id="box-cuidadores">
+       <div class="col-md-8" id="box-cuidadores">
         <div class="card-cuidadores">
           <div class="d-flex align-items-center">
-            <img src="assets/img/joaopereira.jpg" alt="Foto cuidador">
+            <img src="assets/img/" alt="Foto cuidador">
             <div class="ms-3">
-              <strong>João Pereira</strong><br>
-              <!-- Estrelas de avaliação -->
+              <strong></strong><br>
+               
               <div class="text-warning">
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
@@ -198,59 +198,17 @@
                 <i class="fas fa-star-half-alt"></i>
                 <i class="far fa-star"></i>
               </div>
-              <small>São Paulo - Carrão</small>
+              <small></small>
             </div>
           </div>
           <div class="text-end">
-            <div><strong>R$100</strong> <small>/dia</small></div>
-            <a href="reserva.html" class="btn btn-reserva mt-2">Reservar</a>
+            <div><strong></strong> <small></small></div>
+            <a href="reserva.html" class="btn btn-reserva mt-2"></a>
           </div>
         </div>
   
-        <div class="card-cuidadores">
-          <div class="d-flex align-items-center">
-            <img src="assets/img/mariasilva.jpg" alt="Foto cuidador">
-            <div class="ms-3">
-              <strong>Maria Silva</strong><br>
-              <div class="text-warning">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-              </div>
-              <small>São Paulo - Tatuapé</small>
-            </div>
-          </div>
-          <div class="text-end">
-            <div><strong>R$100</strong> <small>/dia</small></div>
-            <a href="reserva.html" class="btn btn-reserva mt-2">Reservar</a>
-          </div>
-        </div>
-  
-        <div class="card-cuidadores">
-          <div class="d-flex align-items-center">
-            <img src="assets/img/pedrooliveira.jpg" alt="Foto cuidador">
-            <div class="ms-3">
-              <strong>Pedro Oliveira</strong><br>
-              <div class="text-warning">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-                <i class="far fa-star"></i>
-              </div>
-              <small>São Paulo - Carrão</small>
-            </div>
-          </div>
-          <div class="text-end">
-            <div><strong>R$100</strong> <small>/dia</small></div>
-            <a href="reserva.html" class="btn btn-reserva mt-2">Reservar</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        
+  </div> 
 
 
 
@@ -324,6 +282,7 @@
       // Aqui você pode aplicar filtros automáticos ou mostrar resultados personalizados
     });
 
+    
 
     let url = window.location.search
     console.log(url.split('='))
@@ -355,6 +314,7 @@ fetch(`http://localhost:3000/reserva/filtro/`,{
     .then((dados)=>{
 
       let saida = ""
+      console.log(dados)
 
       dados.payload.map((dt)=>{
         saida += `
@@ -376,19 +336,20 @@ fetch(`http://localhost:3000/reserva/filtro/`,{
           </div>
           <div class="text-end">
             <div><strong>R$ ${dt.Preco_servico}</strong> <small>/dia</small></div>
-            <a href="reserva.html" class="btn btn-reserva mt-2">Reservar</a>
+            <a href="reserva.html?cuidador=${dt.ID_Usuario}&nome=${dt.Nome}&sobrenome=${dt.Sobrenome}&estado='${dt.Estado}'&cidade=${dt.Cidade}&servico=${dt.Tipo_servico}&precoS=${dt.Preco_servico}&idservico=${dt.ID_servico}"  class="btn btn-reserva mt-2">Reservar</a>
           </div>  
           </div>     
         `
+    
       })
+
       document.getElementById("box-cuidadores").innerHTML = saida;
 
     })
     .catch((erro)=>{
       console.error("Erro ao buscar cuidadores:", erro);
-    });
+    }); 
 
-    // Procurar Cuidadores 
 
     const btnProcurar = document.getElementById("btnProcurarCuidadoresForm");
 
@@ -396,8 +357,8 @@ fetch(`http://localhost:3000/reserva/filtro/`,{
         btnProcurar.addEventListener("click", function (e) {
             // e.preventDefault(); // Não é mais necessário com type="button"
 
-            const dataInicio = document.getElementById("dataInicio").value;
-            const dataFim = document.getElementById("dataFim").value;
+            const dataInicio = "2000-01-01"; // Exemplo de data, você pode pegar do input
+            const dataFim = "2030-01-01"
             const servico = document.getElementById("servico").value;
             const estadoSelect = document.getElementById("estado");
             const estadoSelecionado = estadoSelect.options[estadoSelect.selectedIndex].text; // Pega o texto da opção
@@ -407,7 +368,7 @@ fetch(`http://localhost:3000/reserva/filtro/`,{
             const cidadeValue = cidadeSelect.value; // Pega o valor da opção
 
             const tipoPet = document.getElementById("tipoPet").value;
-            const quantidade = document.getElementById("quantidade").value;
+            const quantidade = 1
 
             // Validação básica (pode ser mais robusta)
             if (!dataInicio || !dataFim || !estadoValue || !cidadeValue) {
@@ -430,8 +391,6 @@ fetch(`http://localhost:3000/reserva/filtro/`,{
             window.location.href = `cuidadores.html?${queryParams.toString()}`;
         });
     }
-
-
 
   </script>
   
