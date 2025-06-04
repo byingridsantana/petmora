@@ -470,69 +470,69 @@ function deletarConta() {
 
 // Enviar Reserva
 // ==============
-function enviarReserva() {
-  // IDs do Tutor, Cuidador e Serviço precisam ser obtidos dinamicamente
-  // Ex: const dadosUsuarioLogado = getUserDataFromCookie();
-  // const ID_Tutor = dadosUsuarioLogado ? dadosUsuarioLogado.ID_Usuario : null;
-  // const ID_Cuidador = // ... obter da página, talvez de um data attribute ou localStorage
-  // const ID_Servico = // ... obter da página
+// function enviarReserva() {
+//   // IDs do Tutor, Cuidador e Serviço precisam ser obtidos dinamicamente
+//   // Ex: const dadosUsuarioLogado = getUserDataFromCookie();
+//   // const ID_Tutor = dadosUsuarioLogado ? dadosUsuarioLogado.ID_Usuario : null;
+//   // const ID_Cuidador = // ... obter da página, talvez de um data attribute ou localStorage
+//   // const ID_Servico = // ... obter da página
 
-  // if(!ID_Tutor || !ID_Cuidador || !ID_Servico) {
-  //     alert("Erro: Informações do usuário, cuidador ou serviço não encontradas para criar a reserva.");
-  //     return;
-  // }
+//   // if(!ID_Tutor || !ID_Cuidador || !ID_Servico) {
+//   //     alert("Erro: Informações do usuário, cuidador ou serviço não encontradas para criar a reserva.");
+//   //     return;
+//   // }
 
-  const reserva = {
-      Cuidador: document.getElementById("id_cuidador")?.value, // Precisa de um campo para o ID do cuidador
-      Tutor: getUserDataFromCookie()?.ID_Usuario, // Pega ID do tutor logado
-      ID_Servico: document.getElementById("id_servico")?.value, // Precisa de um campo para o ID do serviço
-      Preco_servico: document.getElementById("preco_servico")?.innerText.replace("R$", "").trim(),
-      qtd_pets: 1, // Ajuste conforme necessário (ex: contar pets selecionados)
-      Porte_pet: document.getElementById("portePet")?.value, // Este parece ser o tipo de pet na sua reserva.html ("Cachorro", "Gato")
-      Situacao: "Pendente",
-      data_inicio: document.getElementById("data_inicio")?.value,
-      data_conclusao: document.getElementById("data_conclusao")?.value,
-      ID_Pet: document.getElementById("id_pet")?.value, // ID do pet selecionado no <select>
-      Periodo_entrada: document.getElementById("periodo_entrada")?.value,
-      Periodo_saida: document.getElementById("periodo_saida")?.value,
-      Instru_Pet: document.getElementById("instrucao_pet")?.value,
-      Itens_Pet: document.getElementById("itens_pet")?.value
-      // Adicionar Contato de Emergência se for salvar no backend
-      // Nome_Emergencia: document.getElementById("nome_emergencia")?.value,
-      // Celular_Emergencia: document.getElementById("celular_emergencia")?.value,
-  };
+//   const reserva = {
+//       Cuidador: document.getElementById("id_cuidador")?.value, // Precisa de um campo para o ID do cuidador
+//       Tutor: getUserDataFromCookie()?.ID_Usuario, // Pega ID do tutor logado
+//       ID_Servico: document.getElementById("id_servico")?.value, // Precisa de um campo para o ID do serviço
+//       Preco_servico: document.getElementById("preco_servico")?.innerText.replace("R$", "").trim(),
+//       qtd_pets: 1, // Ajuste conforme necessário (ex: contar pets selecionados)
+//       Porte_pet: document.getElementById("portePet")?.value, // Este parece ser o tipo de pet na sua reserva.html ("Cachorro", "Gato")
+//       Situacao: "Pendente",
+//       data_inicio: document.getElementById("data_inicio")?.value,
+//       data_conclusao: document.getElementById("data_conclusao")?.value,
+//       ID_Pet: document.getElementById("id_pet")?.value, // ID do pet selecionado no <select>
+//       Periodo_entrada: document.getElementById("periodo_entrada")?.value,
+//       Periodo_saida: document.getElementById("periodo_saida")?.value,
+//       Instru_Pet: document.getElementById("instrucao_pet")?.value,
+//       Itens_Pet: document.getElementById("itens_pet")?.value
+//       // Adicionar Contato de Emergência se for salvar no backend
+//       // Nome_Emergencia: document.getElementById("nome_emergencia")?.value,
+//       // Celular_Emergencia: document.getElementById("celular_emergencia")?.value,
+//   };
 
-  console.log(`Dados da reserva:`, reserva);
+//   console.log(`Dados da reserva:`, reserva);
 
-  if (!reserva.Tutor || !reserva.ID_Pet || !reserva.data_inicio || !reserva.data_conclusao) {
-      return alert("Por favor, preencha todas as informações obrigatórias da reserva (Pet, datas). Faça login se necessário.");
-  }
+//   if (!reserva.Tutor || !reserva.ID_Pet || !reserva.data_inicio || !reserva.data_conclusao) {
+//       return alert("Por favor, preencha todas as informações obrigatórias da reserva (Pet, datas). Faça login se necessário.");
+//   }
 
-  fetch("http://localhost:3000/reserva/cad-hosp/", { // Corrigido para HTTP
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(reserva)
-  })
-  .then(response => {
-      if (!response.ok) return response.json().then(err => { throw err; });
-      return response.json();
-  })
-  .then(data => {
-      console.log("Reserva enviada com sucesso:", data);
-      alert(data.msg || data.message || "Reserva solicitada com sucesso!"); // Backend parece retornar 'message' às vezes
-      // Após confirmar a reserva, redirecionar para pagamento.html
-      // Passar o ID da reserva recém-criada (se o backend retornar) ou os detalhes para a próxima página
-      if(data.ID_Agendamento || data.ID_Servico) { // Supondo que o backend retorne um ID
-           localStorage.setItem('idReservaParaPagamento', data.ID_Agendamento || data.ID_Servico);
-      }
-      localStorage.setItem('reservaConfirmadaDetalhes', JSON.stringify(reserva)); // Guarda os detalhes atuais
-      window.location.href = `pagamento.html?cuidador=${Cuidador}&tutor=${Tutor}&nome=${Nome}&sobrenome=${Sobrenome}&estado='${Estado}'&cidade=${Cidade}&pet=${Pet}&precoS=${dt.Preco_servico}&idservico=${ID_servico}&ins_pet${Instru_Pet}&itens_pet=${Itens_Pet}&data_inicio=${data_inicio}&data_conclusao=${data_conclusao}`; // Ajuste a URL conforme necessário
-  })
-  .catch(error => {
-      console.error("Erro na requisição de reserva:", error);
-      alert(error.msg || error.message || "Falha ao enviar a reserva. Tente novamente.");
-  });
-}
+//   fetch("http://localhost:3000/reserva/cad-hosp/", { // Corrigido para HTTP
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(reserva)
+//   })
+//   .then(response => {
+//       if (!response.ok) return response.json().then(err => { throw err; });
+//       return response.json();
+//   })
+//   .then(data => {
+//       console.log("Reserva enviada com sucesso:", data);
+//       alert(data.msg || data.message || "Reserva solicitada com sucesso!"); // Backend parece retornar 'message' às vezes
+//       // Após confirmar a reserva, redirecionar para pagamento.html
+//       // Passar o ID da reserva recém-criada (se o backend retornar) ou os detalhes para a próxima página
+//       if(data.ID_Agendamento || data.ID_Servico) { // Supondo que o backend retorne um ID
+//            localStorage.setItem('idReservaParaPagamento', data.ID_Agendamento || data.ID_Servico);
+//       }
+//       localStorage.setItem('reservaConfirmadaDetalhes', JSON.stringify(reserva)); // Guarda os detalhes atuais
+//       window.location.href = `pagamento.html?cuidador=${Cuidador}&tutor=${Tutor}&nome=${Nome}&sobrenome=${Sobrenome}&estado='${Estado}'&cidade=${Cidade}&pet=${Pet}&precoS=${dt.Preco_servico}&idservico=${ID_servico}&ins_pet${Instru_Pet}&itens_pet=${Itens_Pet}&data_inicio=${data_inicio}&data_conclusao=${data_conclusao}`; // Ajuste a URL conforme necessário
+//   })
+//   .catch(error => {
+//       console.error("Erro na requisição de reserva:", error);
+//       alert(error.msg || error.message || "Falha ao enviar a reserva. Tente novamente.");
+//   });
+// }
 // O botão em reserva.html já tem onclick="enviarReserva()"
 
 
@@ -757,7 +757,9 @@ function enviarReserva() {
 //   }
   
   // Coleta dos outros dados do formulário de reserva.html
-  const reserva = {
+
+ const reserva = { 
+
       Cuidador: document.getElementById("id_cuidador")?.value,
       Tutor: ID_Tutor,
       ID_Servico: document.getElementById("id_servico")?.value, // Se servicoId não vier da URL, o backend pode usar um serviço padrão do cuidador
@@ -767,7 +769,7 @@ function enviarReserva() {
       Situacao: "Pendente", 
       data_inicio: document.getElementById("data_inicio")?.value,
       data_conclusao: document.getElementById("data_conclusao")?.value,
-      ID_Pet: document.getElementById("id_pet")?.value,
+      ID_Pet: document.getElementById('id_pet').value, // ID do pet selecionado no <select>
       Periodo_entrada: document.getElementById("periodo_entrada")?.value,
       Periodo_saida: document.getElementById("periodo_saida")?.value,
       Instru_Pet: document.getElementById("instrucao_pet")?.value,
@@ -782,6 +784,50 @@ function enviarReserva() {
       Nome_Emergencia: document.getElementById("nome_emergencia")?.value,
       Celular_Emergencia: document.getElementById("celular_emergencia")?.value,
   };
+const SelectPet = document.getElementById("id_pet");
+const PetSelecionado = SelectPet.options[SelectPet.selectedIndex].text; 
+
+let url = window.location.search
+let dados_url = url.split('=')
+let nome_url = dados_url[2].split('&')[0]
+let sobrenome_url = dados_url[3].split('&')[0]
+
+
+
+
+
+
+    const petselect ={ 
+        Cuidador: document.getElementById("id_cuidador")?.value,
+        nomeCuidador: nome_url, // Nome do cuidador da URL
+        sobrenomeCuidador: sobrenome_url, // Sobrenome do cuidador da URL
+        Tutor: ID_Tutor,
+        ID_Servico: document.getElementById("id_servico")?.value, // Se servicoId não vier da URL, o backend pode usar um serviço padrão do cuidador
+        Preco_servico: document.getElementById("preco_servico")?.innerText.replace("R$", "").trim(), // Ou o valor do card do cuidador
+        // qtd_pets: 1, // Ajuste se o usuário puder selecionar mais de um pet
+        Porte_pet: document.getElementById("porte_pet")?.value, // Parece ser o 'Tipo de Pet' no seu form
+        Situacao: "Pendente", 
+        data_inicio: document.getElementById("data_inicio")?.value,
+        data_conclusao: document.getElementById("data_conclusao")?.value,
+        ID_Pet: document.getElementById('id_pet').value, // ID do pet selecionado no <select>
+        PetSelecionado: PetSelecionado, // Nome do pet selecionado
+        Periodo_entrada: document.getElementById("periodo_entrada")?.value,
+        Periodo_saida: document.getElementById("periodo_saida")?.value,
+        Instru_Pet: document.getElementById("instrucao_pet")?.value,
+        Itens_Pet: document.getElementById("itens_pet")?.value,
+        // Adicionar campos de endereço e contato de emergência
+        CEP: document.getElementById("buscarcep")?.value,
+        Endereco: document.getElementById("endereco")?.value,
+        Numero: document.getElementById("numero")?.value,
+        Bairro: document.getElementById("bairro")?.value,
+        Cidade: document.getElementById("cidade")?.value,
+        Estado: document.getElementById("estado")?.value,
+        Nome_Emergencia: document.getElementById("nome_emergencia")?.value,
+        Celular_Emergencia: document.getElementById("celular_emergencia")?.value,
+
+    };
+
+    
 
   // Validação mais completa dos campos obrigatórios
   if (!reserva.ID_Pet || !reserva.data_inicio || !reserva.data_conclusao || !reserva.Endereco) {
@@ -811,7 +857,7 @@ function enviarReserva() {
            localStorage.setItem('idReservaPendente', data.ID_Agendamento);
       }
       // Opcional: guardar todos os detalhes para exibir no resumo
-      localStorage.setItem('reservaParaPagamentoDetalhes', JSON.stringify(reserva)); 
+      localStorage.setItem('reservaParaPagamentoDetalhes', JSON.stringify(petselect)); // Guarda os detalhes atuais da reserva
       
       window.location.href = 'pagamento.html'; // Redireciona para a página de pagamento
   })
